@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Estación de Diagnóstico Médico · Módulos</title>
-    <!-- Font Awesome (iconos) -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <!-- Google Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
@@ -17,127 +17,77 @@
         <!-- ===== HEADER ===== -->
         <header class="header">
             <div class="brand">
-                <div class="brand-icon"><i class="fas fa-heartbeat"></i></div>
+                <div class="brand-icon"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
                 <div class="brand-name">Med<span>Station</span></div>
             </div>
             <div class="header-controls">
                 <div class="patient-selector">
-                    <i class="fas fa-user-md"></i>
-                    <select id="patientSelect" aria-label="Seleccionar paciente">
-                        <option value="P001">Ana R. (P001)</option>
-                        <option value="P002">Carlos M. (P002)</option>
-                        <option value="P003" selected>Laura G. (P003)</option>
+                    <i class="fas fa-user-tag" aria-hidden="true"></i>
+                    <label class="sr-only" for="userRoleSelect">Tipo de usuario</label>
+                    <select id="userRoleSelect" aria-label="Seleccionar tipo de usuario">
+                        <option value="admin">Administrador</option>
+                        <option value="clientes" selected>Clientes</option>
                     </select>
                 </div>
-                <button class="lang-toggle" id="langToggle" aria-label="Cambiar idioma">
-                    <i class="fas fa-globe"></i> <span id="langLabel">ES</span>
+                <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma" aria-pressed="false">
+                    <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
                 </button>
-                <span class="badge-academic"><i class="fas fa-exclamation-triangle"></i> Uso académico</span>
             </div>
         </header>
 
         <!-- ===== MÓDULOS ===== -->
-        <section class="modules-grid">
-            <!-- Espirómetro -->
-            <div class="module-card" data-module="spiro">
-                <div class="card-header">
-                    <span class="card-title"><i class="fas fa-lungs"></i> <span data-i18n="module_spiro">Espirómetro</span></span>
-                    <span class="module-badge">módulo #1</span>
-                </div>
-                <div class="value-display">
-                    <span class="value-main" id="val_spiro">3.82</span>
-                    <span class="value-unit">L</span>
-                </div>
-                <div class="status-badge"><i class="fas fa-circle" style="color:#1d7cf0;"></i> <span data-i18n="status_spiro">Flujo normal · FEV1 86%</span></div>
-                <div class="card-footer-meta">
-                    <span><i class="far fa-clock"></i> <span id="time_spiro">12:34</span></span>
-                    <span><i class="fas fa-check-circle" style="color:#00a86b;"></i> <span data-i18n="stable">estable</span></span>
-                </div>
-            </div>
-
-            <!-- Composición corporal -->
-            <div class="module-card" data-module="body">
-                <div class="card-header">
-                    <span class="card-title"><i class="fas fa-weight"></i> <span data-i18n="module_body">Composición corporal</span></span>
-                    <span class="module-badge">módulo #2</span>
-                </div>
-                <div class="value-display">
-                    <span class="value-main" id="val_body">22.4</span>
-                    <span class="value-unit">% grasa</span>
-                </div>
-                <div class="status-badge"><i class="fas fa-circle" style="color:#20b2aa;"></i> <span data-i18n="status_body">IMC 24.3 · masa muscular 31.2kg</span></div>
-                <div class="card-footer-meta">
-                    <span><i class="far fa-clock"></i> <span id="time_body">12:38</span></span>
-                    <span><i class="fas fa-check-circle" style="color:#00a86b;"></i> <span data-i18n="validated">validado</span></span>
-                </div>
-            </div>
-
-            <!-- Analizador de estrés -->
-            <div class="module-card" data-module="stress">
-                <div class="card-header">
-                    <span class="card-title"><i class="fas fa-brain"></i> <span data-i18n="module_stress">Analizador de estrés</span></span>
-                    <span class="module-badge">módulo #3</span>
-                </div>
-                <div class="value-display">
-                    <span class="value-main" id="val_stress">47</span>
-                    <span class="value-unit">% HRV</span>
-                </div>
-                <div class="status-badge"><i class="fas fa-circle" style="color:#f09b5a;"></i> <span data-i18n="status_stress">nivel moderado · LF/HF 1.2</span></div>
-                <div class="card-footer-meta">
-                    <span><i class="far fa-clock"></i> <span id="time_stress">12:41</span></span>
-                    <span><i class="fas fa-check-circle" style="color:#00a86b;"></i> <span data-i18n="stable">estable</span></span>
-                </div>
-            </div>
+        <section class="modules-grid" id="modulesGrid" aria-label="Módulos de diagnóstico" aria-live="polite">
+            <!-- Generado por JavaScript -->
         </section>
 
         <!-- ===== GRÁFICO + HISTORIAL ===== -->
         <section class="row-secondary">
             <div class="chart-card">
                 <div class="chart-header">
-                    <span class="card-title"><i class="fas fa-chart-line"></i> <span data-i18n="chart_title">Mediciones recientes</span></span>
-                    <span style="font-size:0.8rem; color:#3b6b9a;"><i class="far fa-calendar-alt"></i> <span data-i18n="chart_sub">últimas lecturas</span></span>
+                    <span class="card-title"><i class="fas fa-chart-line" aria-hidden="true"></i> <span data-i18n="chartTitle">Mediciones recientes</span></span>
                 </div>
-                <div class="chart-bars" id="chartBars">
-                    <!-- Barras fijas de ejemplo -->
-                    <div class="bar-item"><div class="bar bar-spiro" style="height:68px;"></div><span class="bar-label">Espi</span></div>
-                    <div class="bar-item"><div class="bar bar-spiro" style="height:54px;"></div><span class="bar-label">Espi</span></div>
-                    <div class="bar-item"><div class="bar bar-spiro" style="height:92px;"></div><span class="bar-label">Espi</span></div>
-                    <div class="bar-item"><div class="bar bar-body" style="height:44px;"></div><span class="bar-label">Comp</span></div>
-                    <div class="bar-item"><div class="bar bar-body" style="height:70px;"></div><span class="bar-label">Comp</span></div>
-                    <div class="bar-item"><div class="bar bar-body" style="height:58px;"></div><span class="bar-label">Comp</span></div>
-                    <div class="bar-item"><div class="bar bar-stress" style="height:80px;"></div><span class="bar-label">Est</span></div>
-                    <div class="bar-item"><div class="bar bar-stress" style="height:45px;"></div><span class="bar-label">Est</span></div>
-                    <div class="bar-item"><div class="bar bar-stress" style="height:63px;"></div><span class="bar-label">Est</span></div>
+                <div class="chart-bars" id="chartBars" role="img" aria-label="Gráfico de barras de las mediciones más recientes">
+                    <!-- Barras generadas por JavaScript -->
                 </div>
-                <div class="chart-legend">
-                    <span><span class="legend-dot" style="background:#1d7cf0;"></span> Espirómetro (L)</span>
-                    <span><span class="legend-dot" style="background:#20b2aa;"></span> Composición (% grasa)</span>
-                    <span><span class="legend-dot" style="background:#f09b5a;"></span> Estrés (HRV)</span>
+                <div class="chart-legend" id="chartLegend">
+                    <!-- Generado por JavaScript -->
                 </div>
             </div>
 
             <div class="history-card">
                 <div class="history-header">
-                    <span class="card-title"><i class="fas fa-history"></i> <span data-i18n="history_title">Historial</span></span>
-                    <span style="font-size:0.75rem; color:#4b7197;"><i class="fas fa-database"></i> <span data-i18n="cloud">nube</span></span>
+                    <span class="card-title"><i class="fas fa-history" aria-hidden="true"></i> <span data-i18n="historyTitle">Historial</span></span>
                 </div>
-                <div class="history-list" id="historyList">
-                    <!-- Items estáticos de ejemplo -->
-                    <div class="history-item"><span class="history-module"><i class="fas fa-circle" style="font-size:0.5rem; color:#1d7cf0; margin-right:6px;"></i>Espirómetro</span><span class="history-value">3.82 L</span><span class="history-time">12:34</span></div>
-                    <div class="history-item"><span class="history-module"><i class="fas fa-circle" style="font-size:0.5rem; color:#20b2aa; margin-right:6px;"></i>Composición corporal</span><span class="history-value">22.4 %</span><span class="history-time">12:38</span></div>
-                    <div class="history-item"><span class="history-module"><i class="fas fa-circle" style="font-size:0.5rem; color:#f09b5a; margin-right:6px;"></i>Analizador de estrés</span><span class="history-value">47 %</span><span class="history-time">12:41</span></div>
-                    <div class="history-item"><span class="history-module"><i class="fas fa-circle" style="font-size:0.5rem; color:#1d7cf0; margin-right:6px;"></i>Espirómetro</span><span class="history-value">3.75 L</span><span class="history-time">12:15</span></div>
-                    <div class="history-item"><span class="history-module"><i class="fas fa-circle" style="font-size:0.5rem; color:#20b2aa; margin-right:6px;"></i>Composición corporal</span><span class="history-value">22.9 %</span><span class="history-time">12:10</span></div>
+                <div class="history-list" id="historyList" aria-live="polite">
+                    <!-- Items generados por JavaScript -->
                 </div>
             </div>
         </section>
 
         <!-- ===== FOOTER ===== -->
         <footer class="footer">
-            <span><i class="fas fa-shield-alt"></i> <span data-i18n="footer_data">Datos simulados · entorno académico</span></span>
-            <span><i class="fas fa-wifi"></i> <span id="moduleCount">3</span> <span data-i18n="modules_connected">módulos conectados</span> · <i class="fas fa-server"></i> <span data-i18n="server_active">servidor activo</span></span>
-            <span class="disclaimer"><i class="fas fa-exclamation-circle"></i> <span data-i18n="disclaimer">No usar en diagnósticos clínicos reales</span></span>
+            <div class="footer-status">
+                <i class="fas fa-wifi" aria-hidden="true"></i>
+                <span id="moduleCount">3</span> <span data-i18n="footerModules">módulos conectados</span> ·
+                <i class="fas fa-server" aria-hidden="true"></i> <span data-i18n="footerServer">servidor activo</span>
+                <span class="led led-green" id="serverLed" aria-hidden="true"><i class="fas fa-circle"></i></span>
+            </div>
+            <span class="disclaimer"><i class="fas fa-exclamation-triangle" aria-hidden="true"></i> <span data-i18n="footerDisclaimer">Uso académico</span></span>
         </footer>
     </div>
+
+    <!-- ===== MODAL DE MÓDULO ===== -->
+    <div class="modal-overlay" id="moduleModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+        <div class="modal-box">
+            <button class="modal-close" id="modalClose" type="button" aria-label="Cerrar">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            <h2 id="modalTitle"></h2>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
