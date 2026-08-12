@@ -21,3 +21,4 @@ infra/cloudflared/config.yml
 # Sistema
 .DS_Store
 Thumbs.db
+.env*

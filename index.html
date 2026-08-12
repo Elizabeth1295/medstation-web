@@ -4,15 +4,37 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Estación de Diagnóstico Médico · Módulos</title>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <!-- Google Font: Inter -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
-    <!-- Nuestro CSS -->
     <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-    <div class="app">
+
+    <!-- ===== LOGIN (bloquea todo hasta autenticar) ===== -->
+    <div class="modal-overlay" id="loginOverlay" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+        <div class="modal-box login-box">
+            <div class="brand login-brand">
+                <div class="brand-icon"><i class="fas fa-heartbeat" aria-hidden="true"></i></div>
+                <div class="brand-name">Med<span>Station</span></div>
+            </div>
+            <h2 id="loginTitle" class="login-title">Iniciar sesión</h2>
+            <form id="loginForm" class="login-form" autocomplete="on">
+                <label class="login-label" for="loginEmail">Correo</label>
+                <input class="login-input" type="email" id="loginEmail" name="email" required autocomplete="username" />
+
+                <label class="login-label" for="loginPassword">Contraseña</label>
+                <input class="login-input" type="password" id="loginPassword" name="password" required autocomplete="current-password" />
+
+                <div class="login-error" id="loginError" hidden></div>
+
+                <button class="btn-acceder login-submit" type="submit" id="loginSubmit">
+                    <span id="loginSubmitLabel">Ingresar</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="app" id="appRoot" hidden>
 
         <!-- ===== HEADER ===== -->
         <header class="header">
@@ -21,14 +43,13 @@
                 <div class="brand-name">Med<span>Station</span></div>
             </div>
             <div class="header-controls">
-                <div class="patient-selector">
-                    <i class="fas fa-user-tag" aria-hidden="true"></i>
-                    <label class="sr-only" for="userRoleSelect">Tipo de usuario</label>
-                    <select id="userRoleSelect" aria-label="Seleccionar tipo de usuario">
-                        <option value="admin">Administrador</option>
-                        <option value="clientes" selected>Clientes</option>
-                    </select>
+                <div class="patient-selector" id="userBadge">
+                    <i class="fas fa-user-circle" aria-hidden="true"></i>
+                    <span id="userBadgeText">—</span>
                 </div>
+                <button class="lang-toggle" id="logoutBtn" type="button" aria-label="Cerrar sesión">
+                    <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Salir
+                </button>
                 <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma" aria-pressed="false">
                     <i class="fas fa-globe" aria-hidden="true"></i> <span id="langLabel">ES</span>
                 </button>
@@ -37,7 +58,6 @@
 
         <!-- ===== MÓDULOS ===== -->
         <section class="modules-grid" id="modulesGrid" aria-label="Módulos de diagnóstico" aria-live="polite">
-            <!-- Generado por JavaScript -->
         </section>
 
         <!-- ===== GRÁFICO + HISTORIAL ===== -->
@@ -47,10 +67,8 @@
                     <span class="card-title"><i class="fas fa-chart-line" aria-hidden="true"></i> <span data-i18n="chartTitle">Mediciones recientes</span></span>
                 </div>
                 <div class="chart-bars" id="chartBars" role="img" aria-label="Gráfico de barras de las mediciones más recientes">
-                    <!-- Barras generadas por JavaScript -->
                 </div>
                 <div class="chart-legend" id="chartLegend">
-                    <!-- Generado por JavaScript -->
                 </div>
             </div>
 
@@ -59,7 +77,6 @@
                     <span class="card-title"><i class="fas fa-history" aria-hidden="true"></i> <span data-i18n="historyTitle">Historial</span></span>
                 </div>
                 <div class="history-list" id="historyList" aria-live="polite">
-                    <!-- Items generados por JavaScript -->
                 </div>
             </div>
         </section>
@@ -87,7 +104,6 @@
         </div>
     </div>
 
-    <!-- JavaScript -->
     <script src="assets/js/main.js"></script>
 </body>
 </html>

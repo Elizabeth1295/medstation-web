@@ -1,24 +1,32 @@
 // ================================================================
-//  MÓDULO PRINCIPAL – Integración real con ThingsBoard
-//  - Login vía REST API, poll periódico de telemetría por MQTT
-//  - Actualiza las tarjetas, el gráfico de barras y el historial
-//  - Soporta idioma ES/EN y vista admin/clientes
+//  MÓDULO PRINCIPAL – Integración real con ThingsBoard + Login
+//  - Login vía REST API (JWT en sessionStorage)
+//  - Filtrado de módulos según rol real (Tenant Admin vs Customer User)
+//  - Poll periódico de telemetría autenticado
+//  - Soporta idioma ES/EN
 // ================================================================
 
 (function () {
     'use strict';
 
     // ---------------------------------------------------------
-    // Configuración de conexión a ThingsBoard
+    // Configuración de conexión
     // ---------------------------------------------------------
     const APP_CONFIG = {
-        // El navegador nunca habla directo con ThingsBoard: llama a
-        // nuestro propio proxy serverless (/api/telemetry), que oculta
-        // usuario y contraseña en variables de entorno de Vercel.
         apiBase: '/api/telemetry',
         pollIntervalMs: 5000,
         offlineThresholdMs: 15000,
         historyLimit: 10
+    };
+
+    const TOKEN_KEY = 'tb_token';
+
+    // Mapea cada Customer de ThingsBoard a su módulo visual.
+    // (Grupo Espirometro / Composicion Corporal / Estres)
+    const CUSTOMER_MODULE_MAP = {
+        '9d6a8eb0-954e-11f1-a210-4586a442bb3a': 'spiro',
+        'a6676e20-954e-11f1-a210-4586a442bb3a': 'body',
+        'ac5fe730-954e-11f1-a210-4586a442bb3a': 'stress'
     };
 
     // ---------------------------------------------------------
@@ -51,7 +59,7 @@
         }
     };
 
-    const MODULE_ORDER = Object.keys(MODULES);
+    const ALL_MODULE_KEYS = Object.keys(MODULES);
 
     const I18N = {
         es: {
@@ -68,7 +76,10 @@
             modalStatus: 'Estado',
             modalReadings: 'Lecturas registradas',
             modalLastValue: 'Último valor',
-            close: 'Cerrar'
+            close: 'Cerrar',
+            loginError: 'Correo o contraseña incorrectos',
+            loginConnError: 'No se pudo conectar con el servidor',
+            loginLoading: 'Ingresando…'
         },
         en: {
             chartTitle: 'Recent measurements',
@@ -84,7 +95,10 @@
             modalStatus: 'Status',
             modalReadings: 'Logged readings',
             modalLastValue: 'Last value',
-            close: 'Close'
+            close: 'Close',
+            loginError: 'Incorrect email or password',
+            loginConnError: 'Could not connect to the server',
+            loginLoading: 'Signing in…'
         }
     };
 
@@ -93,18 +107,11 @@
     // ---------------------------------------------------------
     const state = {
         lang: 'es',
-        role: 'clientes',
+        authority: null,      // 'TENANT_ADMIN' | 'CUSTOMER_USER'
+        email: null,
+        allowedModules: [],   // subconjunto de ALL_MODULE_KEYS visible para este usuario
         data: {}
     };
-
-    for (const key of MODULE_ORDER) {
-        state.data[key] = {
-            current: null,
-            online: false,
-            lastTs: 0,
-            history: [] // { value, timestamp: Date }
-        };
-    }
 
     function t(key) {
         return I18N[state.lang][key] || key;
@@ -124,10 +131,159 @@
     }
 
     // ---------------------------------------------------------
-    // Integración vía proxy serverless (/api/telemetry)
+    // Sesión: login, logout, restauración
+    // ---------------------------------------------------------
+    function getToken() {
+        return sessionStorage.getItem(TOKEN_KEY);
+    }
+
+    function authHeader() {
+        return { Authorization: `Bearer ${getToken()}` };
+    }
+
+    function logout() {
+        sessionStorage.removeItem(TOKEN_KEY);
+        location.reload();
+    }
+
+    async function apiLogin(email, password) {
+        const res = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: email, password })
+        });
+        if (!res.ok) {
+            const err = new Error('login_failed');
+            err.status = res.status;
+            throw err;
+        }
+        return res.json(); // { token, refreshToken }
+    }
+
+    async function apiMe(token) {
+        const res = await fetch('/api/me', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        if (!res.ok) {
+            const err = new Error('me_failed');
+            err.status = res.status;
+            throw err;
+        }
+        return res.json(); // { authority, customerId, email }
+    }
+
+    function computeAllowedModules(authority, customerId) {
+        if (authority === 'TENANT_ADMIN') return ALL_MODULE_KEYS.slice();
+        const moduleKey = CUSTOMER_MODULE_MAP[customerId];
+        return moduleKey ? [moduleKey] : [];
+    }
+
+    function setLoginError(msg) {
+        const el = document.getElementById('loginError');
+        if (!msg) {
+            el.hidden = true;
+            el.textContent = '';
+        } else {
+            el.hidden = false;
+            el.textContent = msg;
+        }
+    }
+
+    function setLoginLoading(isLoading) {
+        const btn = document.getElementById('loginSubmit');
+        const label = document.getElementById('loginSubmitLabel');
+        btn.disabled = isLoading;
+        label.textContent = isLoading ? t('loginLoading') : 'Ingresar';
+    }
+
+    async function handleLoginSubmit(e) {
+        e.preventDefault();
+        setLoginError(null);
+        setLoginLoading(true);
+
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+
+        try {
+            const { token } = await apiLogin(email, password);
+            sessionStorage.setItem(TOKEN_KEY, token);
+            const me = await apiMe(token);
+            await startApp(me);
+        } catch (err) {
+            console.error(err);
+            if (err.status === 401 || err.status === 400) {
+                setLoginError(t('loginError'));
+            } else {
+                setLoginError(t('loginConnError'));
+            }
+            sessionStorage.removeItem(TOKEN_KEY);
+            setLoginLoading(false);
+        }
+    }
+
+    function bindLoginForm() {
+        document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
+    }
+
+    // Intenta restaurar la sesión desde un token guardado (ej. al recargar la página)
+    async function tryRestoreSession() {
+        const token = getToken();
+        if (!token) return false;
+        try {
+            const me = await apiMe(token);
+            await startApp(me);
+            return true;
+        } catch (err) {
+            sessionStorage.removeItem(TOKEN_KEY);
+            return false;
+        }
+    }
+
+    // ---------------------------------------------------------
+    // Arranque del dashboard tras login exitoso
+    // ---------------------------------------------------------
+    async function startApp(me) {
+        state.authority = me.authority;
+        state.email = me.email;
+        state.allowedModules = computeAllowedModules(me.authority, me.customerId);
+
+        for (const key of state.allowedModules) {
+            state.data[key] = { current: null, online: false, lastTs: 0, history: [] };
+        }
+
+        document.getElementById('loginOverlay').hidden = true;
+        document.getElementById('appRoot').hidden = false;
+
+        const badgeText = document.getElementById('userBadgeText');
+        const roleLabel = state.authority === 'TENANT_ADMIN'
+            ? (state.lang === 'es' ? 'Administrador' : 'Admin')
+            : MODULES[state.allowedModules[0]]
+                ? MODULES[state.allowedModules[0]].label[state.lang]
+                : (state.lang === 'es' ? 'Sin módulo asignado' : 'No module assigned');
+        badgeText.textContent = `${state.email} · ${roleLabel}`;
+
+        bindControls();
+        applyStaticI18n();
+        await refreshAllModules();
+        setInterval(refreshAllModules, APP_CONFIG.pollIntervalMs);
+    }
+
+    function showLogin() {
+        document.getElementById('loginOverlay').hidden = false;
+        document.getElementById('appRoot').hidden = true;
+    }
+
+    // ---------------------------------------------------------
+    // Integración vía proxy serverless (/api/telemetry), autenticada
     // ---------------------------------------------------------
     async function fetchLatest(moduleId) {
-        const res = await fetch(`${APP_CONFIG.apiBase}?device=${moduleId}&type=latest`);
+        const res = await fetch(`${APP_CONFIG.apiBase}?device=${moduleId}&type=latest`, {
+            headers: authHeader()
+        });
+        if (res.status === 401 || res.status === 403) {
+            logout();
+            throw new Error('session_expired');
+        }
         if (!res.ok) throw new Error(`Error proxy telemetry: ${res.status}`);
         const arr = await res.json();
         if (!arr || arr.length === 0) return null;
@@ -135,7 +291,13 @@
     }
 
     async function fetchHistory(moduleId, limit) {
-        const res = await fetch(`${APP_CONFIG.apiBase}?device=${moduleId}&type=history&limit=${limit}`);
+        const res = await fetch(`${APP_CONFIG.apiBase}?device=${moduleId}&type=history&limit=${limit}`, {
+            headers: authHeader()
+        });
+        if (res.status === 401 || res.status === 403) {
+            logout();
+            throw new Error('session_expired');
+        }
         if (!res.ok) throw new Error(`Error proxy telemetry: ${res.status}`);
         const arr = await res.json();
         return arr.map((p) => ({ value: parseFloat(p.value), timestamp: new Date(p.ts) }));
@@ -155,13 +317,14 @@
             const history = await fetchHistory(moduleId, APP_CONFIG.historyLimit);
             mod.history = history;
         } catch (err) {
+            if (err.message === 'session_expired') return;
             console.error(`Error actualizando ${moduleId}:`, err);
             mod.online = false;
         }
     }
 
     async function refreshAllModules() {
-        await Promise.all(MODULE_ORDER.map((key) => refreshModule(key)));
+        await Promise.all(state.allowedModules.map((key) => refreshModule(key)));
         renderModules();
         renderHistory();
         renderChart();
@@ -175,7 +338,7 @@
         const grid = document.getElementById('modulesGrid');
         grid.innerHTML = '';
 
-        MODULE_ORDER.forEach((key) => {
+        state.allowedModules.forEach((key) => {
             const cfg = MODULES[key];
             const mod = state.data[key];
             const card = document.createElement('div');
@@ -220,7 +383,7 @@
     function renderHistory() {
         const container = document.getElementById('historyList');
         let allEvents = [];
-        for (const key of MODULE_ORDER) {
+        for (const key of state.allowedModules) {
             state.data[key].history.forEach((ev) => {
                 allEvents.push({
                     module: key,
@@ -258,7 +421,7 @@
     function renderChart() {
         const container = document.getElementById('chartBars');
         let bars = [];
-        for (const key of MODULE_ORDER) {
+        for (const key of state.allowedModules) {
             const hist = state.data[key].history.slice(0, 3);
             hist.forEach((ev) => bars.push({ module: key, value: ev.value }));
         }
@@ -275,7 +438,7 @@
         });
 
         const legend = document.getElementById('chartLegend');
-        legend.innerHTML = MODULE_ORDER.map((key) => `
+        legend.innerHTML = state.allowedModules.map((key) => `
             <span><span class="legend-dot" style="background:${MODULES[key].color};"></span>${MODULES[key].label[state.lang]}</span>
         `).join('');
     }
@@ -296,7 +459,7 @@
             [t('modalReadings'), String(mod.history.length)]
         ];
 
-        if (state.role === 'admin') {
+        if (state.authority === 'TENANT_ADMIN') {
             const avg = mod.history.length
                 ? mod.history.reduce((s, e) => s + e.value, 0) / mod.history.length
                 : 0;
@@ -317,17 +480,17 @@
     }
 
     // ---------------------------------------------------------
-    // Footer: conteo de módulos conectados y estado del servidor
+    // Footer
     // ---------------------------------------------------------
     function updateFooterStatus() {
-        const onlineCount = MODULE_ORDER.filter((k) => state.data[k].online).length;
+        const onlineCount = state.allowedModules.filter((k) => state.data[k].online).length;
         document.getElementById('moduleCount').textContent = onlineCount;
         const led = document.getElementById('serverLed');
         led.className = 'led ' + (onlineCount > 0 ? 'led-green' : 'led-red');
     }
 
     // ---------------------------------------------------------
-    // Aplicar textos i18n a elementos estáticos
+    // i18n estático
     // ---------------------------------------------------------
     function applyStaticI18n() {
         document.querySelectorAll('[data-i18n]').forEach((el) => {
@@ -345,18 +508,20 @@
     }
 
     // ---------------------------------------------------------
-    // Eventos de UI
+    // Eventos de UI (solo se bindean una vez, tras login exitoso)
     // ---------------------------------------------------------
+    let controlsBound = false;
     function bindControls() {
+        if (controlsBound) return;
+        controlsBound = true;
+
         document.getElementById('langToggle').addEventListener('click', function () {
             state.lang = state.lang === 'es' ? 'en' : 'es';
             this.setAttribute('aria-pressed', state.lang === 'en' ? 'true' : 'false');
             renderAll();
         });
 
-        document.getElementById('userRoleSelect').addEventListener('change', function () {
-            state.role = this.value;
-        });
+        document.getElementById('logoutBtn').addEventListener('click', logout);
 
         document.getElementById('modalClose').addEventListener('click', closeModal);
         document.getElementById('moduleModal').addEventListener('click', function (e) {
@@ -371,10 +536,9 @@
     // Inicialización
     // ---------------------------------------------------------
     async function init() {
-        bindControls();
-        applyStaticI18n();
-        await refreshAllModules(); // primera carga real antes de mostrar la UI
-        setInterval(refreshAllModules, APP_CONFIG.pollIntervalMs);
+        bindLoginForm();
+        const restored = await tryRestoreSession();
+        if (!restored) showLogin();
     }
 
     if (document.readyState === 'loading') {

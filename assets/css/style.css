@@ -533,3 +533,60 @@ select:focus-visible,
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: #eef3f9; border-radius: 10px; }
 ::-webkit-scrollbar-thumb { background: #b6ccdf; border-radius: 10px; }
+
+/* ===== LOGIN ===== */
+.login-box {
+    max-width: 380px;
+}
+.login-brand {
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.login-title {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.login-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-top: 10px;
+}
+.login-input {
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--color-text);
+    background: #fbfdff;
+    transition: var(--transition);
+}
+.login-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: white;
+}
+.login-error {
+    background: #fbeae6;
+    color: #a8341f;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-top: 14px;
+}
+.login-submit {
+    margin-top: 18px;
+    padding: 12px 0;
+}
+.login-submit:disabled {
+    opacity: 0.7;
+    cursor: wait;
+}
