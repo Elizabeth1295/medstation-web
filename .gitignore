@@ -1,0 +1,23 @@
+# Vercel
+.vercel/
+.env.local
+.env*.local
+
+# Node
+node_modules/
+
+# ThingsBoard (datos y logs locales, no versionar)
+infra/docker/thingsboard/data/
+infra/docker/thingsboard/logs/
+
+# Cloudflared (credenciales del túnel, NUNCA subir)
+infra/cloudflared/*.json
+infra/cloudflared/config.yml
+
+# Respaldos locales
+*.backup
+*.bak
+
+# Sistema
+.DS_Store
+Thumbs.db

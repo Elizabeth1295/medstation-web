@@ -1,0 +1,10 @@
+# Plantilla de configuración de Cloudflare Tunnel.
+# Copiar a config.yml y completar con los valores reales
+# (NUNCA subir config.yml ni el archivo de credenciales *.json a git).
+tunnel: <TUNNEL_ID_AQUI>
+credentials-file: /etc/cloudflared/<TUNNEL_ID_AQUI>.json
+
+ingress:
+  - hostname: api.tudominio.online
+    service: http://localhost:8080
+  - service: http_status:404

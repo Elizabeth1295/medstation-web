@@ -1,29 +1,34 @@
 // ================================================================
-//  MÓDULO PRINCIPAL – Simulación de datos en tiempo real
-//  - Genera datos aleatorios para los 3 módulos
+//  MÓDULO PRINCIPAL – Integración real con ThingsBoard
+//  - Login vía REST API, poll periódico de telemetría por MQTT
 //  - Actualiza las tarjetas, el gráfico de barras y el historial
-//  - Un único ciclo de actualización (evita valores inconsistentes)
 //  - Soporta idioma ES/EN y vista admin/clientes
-//
-//  NOTA: esta simulación es un placeholder. Cuando el servidor
-//  ThingsBoard esté disponible, reemplazar generateNewData() /
-//  el setInterval de simulación por una suscripción MQTT/WebSocket
-//  real (ver fetchFromThingsBoard() más abajo, dejado como stub).
 // ================================================================
 
 (function () {
     'use strict';
 
     // ---------------------------------------------------------
-    // Configuración de módulos
+    // Configuración de conexión a ThingsBoard
+    // ---------------------------------------------------------
+    const APP_CONFIG = {
+        // El navegador nunca habla directo con ThingsBoard: llama a
+        // nuestro propio proxy serverless (/api/telemetry), que oculta
+        // usuario y contraseña en variables de entorno de Vercel.
+        apiBase: '/api/telemetry',
+        pollIntervalMs: 5000,
+        offlineThresholdMs: 15000,
+        historyLimit: 10
+    };
+
+    // ---------------------------------------------------------
+    // Configuración de módulos (visual / i18n)
     // ---------------------------------------------------------
     const MODULES = {
         spiro: {
             label: { es: 'Espirómetro', en: 'Spirometer' },
             icon: 'fa-lungs',
             color: '#1d7cf0',
-            base: 3.8,
-            range: 0.6,
             unit: { es: 'L', en: 'L' },
             decimals: 2,
             max: 5
@@ -32,8 +37,6 @@
             label: { es: 'Composición corporal', en: 'Body composition' },
             icon: 'fa-weight',
             color: '#20b2aa',
-            base: 22,
-            range: 3,
             unit: { es: '% grasa', en: '% fat' },
             decimals: 1,
             max: 35
@@ -42,8 +45,6 @@
             label: { es: 'Analizador de estrés', en: 'Stress analyzer' },
             icon: 'fa-brain',
             color: '#f09b5a',
-            base: 45,
-            range: 12,
             unit: { es: '% HRV', en: '% HRV' },
             decimals: 0,
             max: 100
@@ -52,7 +53,6 @@
 
     const MODULE_ORDER = Object.keys(MODULES);
 
-    // Textos de la interfaz (i18n mínimo)
     const I18N = {
         es: {
             chartTitle: 'Mediciones recientes',
@@ -99,8 +99,9 @@
 
     for (const key of MODULE_ORDER) {
         state.data[key] = {
-            current: MODULES[key].base,
-            online: true,
+            current: null,
+            online: false,
+            lastTs: 0,
             history: [] // { value, timestamp: Date }
         };
     }
@@ -111,7 +112,8 @@
 
     function formatValue(moduleId, value) {
         const cfg = MODULES[moduleId];
-        return value.toFixed(cfg.decimals);
+        if (value === null || value === undefined) return '—';
+        return Number(value).toFixed(cfg.decimals);
     }
 
     function formatTime(date) {
@@ -121,56 +123,49 @@
         });
     }
 
-    // Genera un valor con algo de "memoria" respecto al anterior,
-    // para que las lecturas se vean como una señal fisiológica real
-    // y no como ruido puramente aleatorio.
-    function nextValue(moduleId) {
-        const cfg = MODULES[moduleId];
-        const prev = state.data[moduleId].current;
-        const drift = (Math.random() - 0.5) * cfg.range * 0.5;
-        let val = prev + drift;
-        // Mantener el valor cerca de su rango fisiológico esperado
-        const min = Math.max(0, cfg.base - cfg.range);
-        const max = cfg.base + cfg.range;
-        val = Math.min(max, Math.max(min, val));
-        return parseFloat(val.toFixed(cfg.decimals));
+    // ---------------------------------------------------------
+    // Integración vía proxy serverless (/api/telemetry)
+    // ---------------------------------------------------------
+    async function fetchLatest(moduleId) {
+        const res = await fetch(`${APP_CONFIG.apiBase}?device=${moduleId}&type=latest`);
+        if (!res.ok) throw new Error(`Error proxy telemetry: ${res.status}`);
+        const arr = await res.json();
+        if (!arr || arr.length === 0) return null;
+        return { value: parseFloat(arr[0].value), ts: arr[0].ts };
     }
 
-    function initHistory() {
-        const now = Date.now();
-        for (const key of MODULE_ORDER) {
-            for (let i = 4; i >= 0; i--) {
-                const val = nextValue(key);
-                state.data[key].current = val;
-                state.data[key].history.unshift({ value: val, timestamp: new Date(now - i * 60000) });
-            }
-        }
+    async function fetchHistory(moduleId, limit) {
+        const res = await fetch(`${APP_CONFIG.apiBase}?device=${moduleId}&type=history&limit=${limit}`);
+        if (!res.ok) throw new Error(`Error proxy telemetry: ${res.status}`);
+        const arr = await res.json();
+        return arr.map((p) => ({ value: parseFloat(p.value), timestamp: new Date(p.ts) }));
     }
 
-    // ---------------------------------------------------------
-    // Simulación de lectura nueva (reemplazar por datos reales
-    // de ThingsBoard vía WebSocket/MQTT cuando esté disponible)
-    // ---------------------------------------------------------
-    function generateReading(moduleId) {
+    async function refreshModule(moduleId) {
         const mod = state.data[moduleId];
-        if (!mod.online) return; // un módulo desconectado no reporta lecturas
-        const val = nextValue(moduleId);
-        mod.current = val;
-        mod.history.unshift({ value: val, timestamp: new Date() });
-        if (mod.history.length > 10) mod.history.pop();
+        try {
+            const latest = await fetchLatest(moduleId);
+            if (latest) {
+                mod.current = latest.value;
+                mod.lastTs = latest.ts;
+                mod.online = (Date.now() - latest.ts) < APP_CONFIG.offlineThresholdMs;
+            } else {
+                mod.online = false;
+            }
+            const history = await fetchHistory(moduleId, APP_CONFIG.historyLimit);
+            mod.history = history;
+        } catch (err) {
+            console.error(`Error actualizando ${moduleId}:`, err);
+            mod.online = false;
+        }
     }
 
-    // Simula caídas/reconexiones esporádicas de un módulo,
-    // como ocurriría con un Raspberry Pi real perdiendo enlace MQTT.
-    function maybeToggleConnectivity() {
-        const key = MODULE_ORDER[Math.floor(Math.random() * MODULE_ORDER.length)];
-        const mod = state.data[key];
-        // Baja probabilidad de cambiar de estado en cada ciclo
-        if (Math.random() < 0.06) {
-            mod.online = !mod.online;
-            renderModules();
-            updateFooterStatus();
-        }
+    async function refreshAllModules() {
+        await Promise.all(MODULE_ORDER.map((key) => refreshModule(key)));
+        renderModules();
+        renderHistory();
+        renderChart();
+        updateFooterStatus();
     }
 
     // ---------------------------------------------------------
@@ -266,10 +261,6 @@
         for (const key of MODULE_ORDER) {
             const hist = state.data[key].history.slice(0, 3);
             hist.forEach((ev) => bars.push({ module: key, value: ev.value }));
-            while (hist.length < 3) {
-                bars.push({ module: key, value: MODULES[key].base });
-                hist.push(1);
-            }
         }
 
         container.innerHTML = '';
@@ -290,7 +281,7 @@
     }
 
     // ---------------------------------------------------------
-    // Modal de detalle de módulo (reemplaza al alert())
+    // Modal de detalle de módulo
     // ---------------------------------------------------------
     function openModuleModal(moduleId) {
         const cfg = MODULES[moduleId];
@@ -305,13 +296,12 @@
             [t('modalReadings'), String(mod.history.length)]
         ];
 
-        // Vista extendida para el rol administrador
         if (state.role === 'admin') {
             const avg = mod.history.length
                 ? mod.history.reduce((s, e) => s + e.value, 0) / mod.history.length
                 : 0;
-            rows.push([state.lang === 'es' ? 'Promedio (10 últimas)' : 'Average (last 10)', `${avg.toFixed(cfg.decimals)} ${cfg.unit[state.lang]}`]);
-            rows.push(['MQTT topic', `medstation/${moduleId}/data`]);
+            rows.push([state.lang === 'es' ? 'Promedio (últimas)' : 'Average (recent)', `${avg.toFixed(cfg.decimals)} ${cfg.unit[state.lang]}`]);
+            rows.push(['MQTT topic', 'v1/devices/me/telemetry']);
         }
 
         document.getElementById('modalBody').innerHTML = rows
@@ -346,9 +336,6 @@
         document.getElementById('langLabel').textContent = state.lang.toUpperCase();
     }
 
-    // ---------------------------------------------------------
-    // Render completo
-    // ---------------------------------------------------------
     function renderAll() {
         applyStaticI18n();
         renderModules();
@@ -356,29 +343,6 @@
         renderChart();
         updateFooterStatus();
     }
-
-    // ---------------------------------------------------------
-    // Ciclo único de actualización de datos (cada 3s)
-    // ---------------------------------------------------------
-    function tick() {
-        const key = MODULE_ORDER[Math.floor(Math.random() * MODULE_ORDER.length)];
-        generateReading(key);
-        maybeToggleConnectivity();
-        renderModules();
-        renderHistory();
-        renderChart();
-    }
-
-    // ---------------------------------------------------------
-    // Stub para integración futura con ThingsBoard
-    // (dejarlo aquí facilita el reemplazo de la simulación
-    // sin tocar el resto del render)
-    // ---------------------------------------------------------
-    // async function fetchFromThingsBoard() {
-    //     const res = await fetch('/api/plugins/telemetry/DEVICE/{deviceId}/values/timeseries');
-    //     const json = await res.json();
-    //     // mapear json a state.data[...] y llamar renderModules()/renderHistory()/renderChart()
-    // }
 
     // ---------------------------------------------------------
     // Eventos de UI
@@ -406,11 +370,11 @@
     // ---------------------------------------------------------
     // Inicialización
     // ---------------------------------------------------------
-    function init() {
-        initHistory();
+    async function init() {
         bindControls();
-        renderAll();
-        setInterval(tick, 3000);
+        applyStaticI18n();
+        await refreshAllModules(); // primera carga real antes de mostrar la UI
+        setInterval(refreshAllModules, APP_CONFIG.pollIntervalMs);
     }
 
     if (document.readyState === 'loading') {
