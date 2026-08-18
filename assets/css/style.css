@@ -278,10 +278,75 @@ select:focus-visible,
 /* ===== GRÁFICO ===== */
 .row-secondary {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
     margin-bottom: 28px;
 }
+
+/* ===== PACIENTES Y MEDICIONES ===== */
+.clinical-card {
+    background: var(--color-surface);
+    border-radius: var(--radius-card);
+    padding: 22px 20px;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 6px 18px var(--color-shadow);
+    margin-bottom: 28px;
+}
+.clinical-header, .clinical-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.clinical-header { justify-content: space-between; margin-bottom: 14px; }
+.patient-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(180px, 1fr));
+    gap: 10px;
+    margin-bottom: 14px;
+}
+.patient-form[hidden],
+.clinical-filter[hidden],
+.lang-toggle[hidden] {
+    display: none !important;
+}
+.patient-add { width: auto; margin: 0; padding: 11px 20px; grid-column: 1 / -1; }
+.clinical-filter label { font-size: 0.8rem; font-weight: 600; color: var(--color-text-secondary); }
+.clinical-filter select { min-width: 260px; }
+.station-assignments { display: grid; grid-template-columns: repeat(3, minmax(190px, 1fr)); gap: 12px; margin: 6px 0 18px; }
+.station-assignments[hidden] { display: none !important; }
+.station-assignment { padding: 14px; border: 1px solid var(--color-border); border-radius: 14px; background: #fbfdff; }
+.station-assignment label { display: block; font-size: 0.78rem; font-weight: 700; color: var(--color-text-secondary); margin-bottom: 7px; }
+.station-assignment select { width: 100%; }
+.clinical-message { font-size: 0.8rem; color: #1c7a43; }
+.clinical-message.is-error { color: var(--color-danger); }
+.measurements-table-wrap { overflow: auto; margin-top: 16px; max-height: 360px; border: 1px solid var(--color-border); border-radius: 14px; }
+.measurements-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.measurements-table th, .measurements-table td { text-align: left; padding: 10px; border-bottom: 1px solid var(--color-border); }
+.measurements-table th { color: var(--color-text-secondary); background: white; position: sticky; top: 0; z-index: 2; }
+.measurements-table td small { display: block; color: #6e89a8; }
+.station-group td { background: var(--color-primary-light); color: var(--color-primary); font-weight: 700; }
+.station-accordions { display: grid; gap: 10px; margin-top: 16px; }
+.station-accordion { border: 1px solid var(--color-border); border-radius: 14px; overflow: hidden; background: #fbfdff; }
+.station-accordion summary { list-style: none; cursor: pointer; padding: 14px 16px; display: flex; justify-content: space-between; align-items: center; gap: 12px; font-weight: 700; color: var(--color-text-secondary); }
+.station-accordion summary::-webkit-details-marker { display: none; }
+.station-accordion summary::after { content: '\f078'; font-family: 'Font Awesome 5 Free'; font-weight: 900; color: var(--color-primary); transition: transform var(--transition); }
+.station-accordion[open] summary::after { transform: rotate(180deg); }
+.station-accordion[open] summary { background: var(--color-primary-light); }
+.station-summary-meta { margin-left: auto; font-size: 0.75rem; font-weight: 500; color: #6e89a8; }
+.station-accordion .measurements-table-wrap { margin: 0; max-height: 300px; border: 0; border-radius: 0; }
+.patient-dashboard { display: grid; grid-template-columns: minmax(220px, 0.65fr) 2fr; gap: 20px; margin: 8px 0 22px; }
+.patient-dashboard[hidden] { display: none; }
+.patient-number-card { background: linear-gradient(145deg, #0066cc, #004d99); color: white; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; justify-content: center; min-height: 190px; }
+.patient-number-card span { font-size: 0.8rem; opacity: 0.8; }
+.patient-number-card strong { font-size: clamp(1.5rem, 3vw, 2.4rem); margin: 8px 0; overflow-wrap: anywhere; }
+.patient-number-card small { opacity: 0.85; }
+.patient-number-card small + small { margin-top: 4px; overflow-wrap: anywhere; }
+.profile-form { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; }
+.profile-form h3 { grid-column: 1 / -1; font-size: 1rem; color: var(--color-text-secondary); }
+.profile-field { display: flex; flex-direction: column; gap: 6px; }
+.profile-field > span { font-size: 0.78rem; font-weight: 700; color: var(--color-text-secondary); }
+.profile-save { grid-column: 1 / -1; padding: 11px; }
 
 .chart-card, .history-card {
     background: var(--color-surface);
@@ -518,6 +583,13 @@ select:focus-visible,
         align-items: center;
         text-align: center;
     }
+    .patient-form { grid-template-columns: 1fr; }
+    .patient-add { width: 100%; padding: 11px; }
+    .patient-dashboard { grid-template-columns: 1fr; }
+    .profile-form { grid-template-columns: 1fr; }
+    .station-assignments { grid-template-columns: 1fr; }
+    .station-accordion summary { align-items: flex-start; }
+    .station-summary-meta { display: block; margin-left: 0; }
 }
 
 /* Respetar preferencia de reducción de movimiento */
@@ -568,6 +640,8 @@ select:focus-visible,
     background: #fbfdff;
     transition: var(--transition);
 }
+.login-input-block { width: 100%; margin-top: 6px; }
+.login-help { color: #6e89a8; font-size: 0.75rem; text-align: center; margin-top: 10px; }
 .login-input:focus {
     outline: none;
     border-color: var(--color-primary);

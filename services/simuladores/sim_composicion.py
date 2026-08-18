@@ -1,13 +1,14 @@
 import time
 import json
 import random
+import os
 from paho.mqtt import client as mqtt_client
 
-CLIENT_ID = "865b97q04fy55f2jsx0o"
-USERNAME = "5e0t7zgv9v94qkhdrv5w"
-PASSWORD = "jtdbx7yjx1iuyviaajm3"
+CLIENT_ID = os.environ["TB_MQTT_BODY_CLIENT_ID"]
+USERNAME = os.environ["TB_MQTT_BODY_USERNAME"]
+PASSWORD = os.environ["TB_MQTT_BODY_PASSWORD"]
 
-BROKER = "localhost"
+BROKER = os.getenv("TB_MQTT_BROKER", "localhost")
 PORT = 1883
 TOPIC = "v1/devices/me/telemetry"
 

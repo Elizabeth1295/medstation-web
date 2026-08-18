@@ -18,18 +18,29 @@
                 <div class="brand-name">Med<span>Station</span></div>
             </div>
             <h2 id="loginTitle" class="login-title">Iniciar sesión</h2>
-            <form id="loginForm" class="login-form" autocomplete="on">
-                <label class="login-label" for="loginEmail">Correo</label>
-                <input class="login-input" type="email" id="loginEmail" name="email" required autocomplete="username" />
+            <form id="loginForm" class="login-form" autocomplete="off">
+                <label class="login-label" for="loginMode">Tipo de acceso</label>
+                <select class="login-input" id="loginMode">
+                    <option value="admin">Administrador / técnico</option>
+                    <option value="patient">Paciente</option>
+                    <option value="register">Crear cuenta de paciente</option>
+                </select>
+                <div id="registerNameGroup" hidden>
+                    <label class="login-label" for="registerName">Usuario</label>
+                    <input class="login-input login-input-block" type="text" id="registerName" maxlength="50" autocomplete="username" placeholder="Ej. eli23" />
+                </div>
+                <label class="login-label" for="loginEmail" id="loginIdentityLabel">Correo</label>
+                <input class="login-input" type="text" id="loginEmail" name="medstation_identity" required autocomplete="off" />
 
                 <label class="login-label" for="loginPassword">Contraseña</label>
-                <input class="login-input" type="password" id="loginPassword" name="password" required autocomplete="current-password" />
+                <input class="login-input" type="password" id="loginPassword" name="medstation_password" required autocomplete="new-password" />
 
                 <div class="login-error" id="loginError" hidden></div>
 
                 <button class="btn-acceder login-submit" type="submit" id="loginSubmit">
                     <span id="loginSubmitLabel">Ingresar</span>
                 </button>
+                <p class="login-help" id="loginHelp">Administradores y técnicos usan su cuenta de ThingsBoard.</p>
             </form>
         </div>
     </div>
@@ -60,24 +71,47 @@
         <section class="modules-grid" id="modulesGrid" aria-label="Módulos de diagnóstico" aria-live="polite">
         </section>
 
-        <!-- ===== GRÁFICO + HISTORIAL ===== -->
-        <section class="row-secondary">
-            <div class="chart-card">
-                <div class="chart-header">
-                    <span class="card-title"><i class="fas fa-chart-line" aria-hidden="true"></i> <span data-i18n="chartTitle">Mediciones recientes</span></span>
-                </div>
-                <div class="chart-bars" id="chartBars" role="img" aria-label="Gráfico de barras de las mediciones más recientes">
-                </div>
-                <div class="chart-legend" id="chartLegend">
-                </div>
+        <!-- ===== PACIENTES Y MEDICIONES GUARDADAS ===== -->
+        <section class="clinical-card" aria-labelledby="clinicalTitle">
+            <div class="clinical-header">
+                <span class="card-title" id="clinicalTitle"><i class="fas fa-notes-medical" aria-hidden="true"></i> Pacientes y mediciones</span>
+                <button class="lang-toggle" id="refreshClinicalBtn" type="button"><i class="fas fa-sync-alt" aria-hidden="true"></i> Actualizar</button>
             </div>
-
-            <div class="history-card">
-                <div class="history-header">
-                    <span class="card-title"><i class="fas fa-history" aria-hidden="true"></i> <span data-i18n="historyTitle">Historial</span></span>
-                </div>
-                <div class="history-list" id="historyList" aria-live="polite">
-                </div>
+            <form class="patient-form" id="patientForm">
+                <input class="login-input" id="patientCode" maxlength="50" placeholder="Código (ej. PAC-001)" required />
+                <input class="login-input" id="patientName" maxlength="150" placeholder="Nombre (opcional)" />
+                <input class="login-input" id="patientEmail" type="email" maxlength="254" placeholder="Correo para iniciar sesión" />
+                <input class="login-input" id="patientPassword" type="password" minlength="8" placeholder="Contraseña (mín. 8 caracteres)" />
+                <button class="btn-acceder patient-add" type="submit">Agregar paciente</button>
+            </form>
+            <div class="station-assignments" id="stationAssignments" aria-label="Pacientes activos por estación"></div>
+            <div class="clinical-filter" id="patientFilter">
+                <label for="patientSelect">Consultar historial de</label>
+                <select class="login-input" id="patientSelect">
+                    <option value="">Seleccione un paciente</option>
+                </select>
+                <span class="clinical-message" id="clinicalMessage" aria-live="polite"></span>
+            </div>
+            <div class="patient-dashboard" id="patientDashboard" hidden>
+                <aside class="patient-number-card">
+                    <span>Número de paciente</span>
+                    <strong id="patientNumber">—</strong>
+                    <small id="patientUsername">—</small>
+                    <small id="patientEmail">—</small>
+                </aside>
+                <form class="profile-form" id="profileForm">
+                    <h3>Información personal</h3>
+                    <label class="profile-field" for="profileFirstName"><span>Nombre</span><input class="login-input" id="profileFirstName" maxlength="100" placeholder="Ej. Eli" required /></label>
+                    <label class="profile-field" for="profileLastName"><span>Apellido</span><input class="login-input" id="profileLastName" maxlength="100" placeholder="Ej. Sánchez" required /></label>
+                    <label class="profile-field" for="profileAge"><span>Edad (años)</span><input class="login-input" id="profileAge" type="number" min="1" max="120" placeholder="Ej. 25" required /></label>
+                    <label class="profile-field" for="profileSex"><span>Sexo</span><select class="login-input" id="profileSex" required><option value="">Seleccione</option><option value="F">Femenino (F)</option><option value="M">Masculino (M)</option></select></label>
+                    <label class="profile-field" for="profileHeight"><span>Altura (cm)</span><input class="login-input" id="profileHeight" type="number" min="50" max="250" step="0.01" placeholder="Ej. 170" required /></label>
+                    <label class="profile-field" for="profileWeight"><span>Peso (kg)</span><input class="login-input" id="profileWeight" type="number" min="2" max="500" step="0.01" placeholder="Ej. 65" required /></label>
+                    <button class="btn-acceder profile-save" type="submit">Guardar información</button>
+                </form>
+            </div>
+            <div class="station-accordions" id="measurementsBody">
+                <div class="history-empty">Seleccione un paciente para ver su historial.</div>
             </div>
         </section>
 

@@ -1,14 +1,15 @@
 import time
 import json
 import random
+import os
 from paho.mqtt import client as mqtt_client
 
 # --- Credenciales MQTT Basic del dispositivo "Espirometro" ---
-CLIENT_ID = "morzbgbr1lsspaok8a51"
-USERNAME = "hak273zxwn3fx0v0646p"
-PASSWORD = "ojm8azsew17ef99bq1ab"
+CLIENT_ID = os.environ["TB_MQTT_SPIRO_CLIENT_ID"]
+USERNAME = os.environ["TB_MQTT_SPIRO_USERNAME"]
+PASSWORD = os.environ["TB_MQTT_SPIRO_PASSWORD"]
 
-BROKER = "localhost"
+BROKER = os.getenv("TB_MQTT_BROKER", "localhost")
 PORT = 1883
 TOPIC = "v1/devices/me/telemetry"
 

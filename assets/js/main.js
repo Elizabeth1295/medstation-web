@@ -74,7 +74,7 @@
             historyEmpty: 'Aún no hay registros',
             modalDevice: 'Dispositivo',
             modalStatus: 'Estado',
-            modalReadings: 'Lecturas registradas',
+            modalReadings: 'Lecturas válidas recientes',
             modalLastValue: 'Último valor',
             close: 'Cerrar',
             loginError: 'Correo o contraseña incorrectos',
@@ -93,7 +93,7 @@
             historyEmpty: 'No readings yet',
             modalDevice: 'Device',
             modalStatus: 'Status',
-            modalReadings: 'Logged readings',
+            modalReadings: 'Recent valid readings',
             modalLastValue: 'Last value',
             close: 'Close',
             loginError: 'Incorrect email or password',
@@ -110,7 +110,10 @@
         authority: null,      // 'TENANT_ADMIN' | 'CUSTOMER_USER'
         email: null,
         allowedModules: [],   // subconjunto de ALL_MODULE_KEYS visible para este usuario
-        data: {}
+        data: {},
+        patients: [],
+        selectedPatientCode: '',
+        measurements: []
     };
 
     function t(key) {
@@ -138,11 +141,13 @@
     }
 
     function authHeader() {
-        return { Authorization: `Bearer ${getToken()}` };
+        const token = getToken();
+        return token ? { Authorization: `Bearer ${token}` } : {};
     }
 
-    function logout() {
+    async function logout() {
         sessionStorage.removeItem(TOKEN_KEY);
+        await fetch('/api/patient-logout', { method: 'POST' }).catch(() => {});
         location.reload();
     }
 
@@ -193,7 +198,28 @@
         const btn = document.getElementById('loginSubmit');
         const label = document.getElementById('loginSubmitLabel');
         btn.disabled = isLoading;
-        label.textContent = isLoading ? t('loginLoading') : 'Ingresar';
+        const registering = document.getElementById('loginMode').value === 'register';
+        label.textContent = isLoading ? (registering ? 'Creando cuenta…' : t('loginLoading')) : (registering ? 'Crear cuenta' : 'Ingresar');
+    }
+
+    function updateLoginMode(clearCredentials = false) {
+        const mode = document.getElementById('loginMode').value;
+        if (clearCredentials) {
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('registerName').value = '';
+            setLoginError(null);
+        }
+        const registering = mode === 'register';
+        document.getElementById('registerNameGroup').hidden = !registering;
+        document.getElementById('registerName').required = registering;
+        document.getElementById('loginSubmitLabel').textContent = registering ? 'Crear cuenta' : 'Ingresar';
+        document.getElementById('loginIdentityLabel').textContent = mode === 'patient' ? 'Correo o usuario' : 'Correo';
+        document.getElementById('loginHelp').textContent = registering
+            ? 'Se generará un código de paciente único para su historial.'
+            : mode === 'patient'
+                ? 'Ingrese con el correo y contraseña de su cuenta de paciente.'
+                : 'Administradores y técnicos usan su cuenta de ThingsBoard.';
     }
 
     async function handleLoginSubmit(e) {
@@ -203,15 +229,51 @@
 
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
+        const mode = document.getElementById('loginMode').value;
 
         try {
-            const { token } = await apiLogin(email, password);
-            sessionStorage.setItem(TOKEN_KEY, token);
-            const me = await apiMe(token);
+            let me;
+            if (mode === 'patient' || mode === 'register') {
+                if (mode === 'register') {
+                    const registerRes = await fetch('/api/patient-register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            username: document.getElementById('registerName').value.trim(),
+                            email,
+                            password
+                        })
+                    });
+                    const registerData = await registerRes.json().catch(() => ({}));
+                    if (!registerRes.ok) {
+                        const err = new Error(registerData.error || 'register_failed');
+                        err.status = registerRes.status;
+                        err.userMessage = registerData.error;
+                        throw err;
+                    }
+                }
+                const res = await fetch('/api/patient-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                if (!res.ok) {
+                    const err = new Error('login_failed');
+                    err.status = res.status;
+                    throw err;
+                }
+                me = await (await fetch('/api/patient-session')).json();
+            } else {
+                const { token } = await apiLogin(email, password);
+                sessionStorage.setItem(TOKEN_KEY, token);
+                me = await apiMe(token);
+            }
             await startApp(me);
         } catch (err) {
             console.error(err);
-            if (err.status === 401 || err.status === 400) {
+            if (err.userMessage) {
+                setLoginError(err.userMessage);
+            } else if (err.status === 401 || err.status === 400) {
                 setLoginError(t('loginError'));
             } else {
                 setLoginError(t('loginConnError'));
@@ -223,18 +285,34 @@
 
     function bindLoginForm() {
         document.getElementById('loginForm').addEventListener('submit', handleLoginSubmit);
+        document.getElementById('loginMode').addEventListener('change', () => updateLoginMode(true));
+        updateLoginMode();
+        setTimeout(() => {
+            if (document.getElementById('loginMode').value === 'admin') {
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+            }
+        }, 200);
     }
 
     // Intenta restaurar la sesión desde un token guardado (ej. al recargar la página)
     async function tryRestoreSession() {
         const token = getToken();
-        if (!token) return false;
+        if (token) {
+            try {
+                const me = await apiMe(token);
+                await startApp(me);
+                return true;
+            } catch (err) {
+                sessionStorage.removeItem(TOKEN_KEY);
+            }
+        }
         try {
-            const me = await apiMe(token);
-            await startApp(me);
+            const res = await fetch('/api/patient-session');
+            if (!res.ok) return false;
+            await startApp(await res.json());
             return true;
-        } catch (err) {
-            sessionStorage.removeItem(TOKEN_KEY);
+        } catch {
             return false;
         }
     }
@@ -245,7 +323,8 @@
     async function startApp(me) {
         state.authority = me.authority;
         state.email = me.email;
-        state.allowedModules = computeAllowedModules(me.authority, me.customerId);
+        state.allowedModules = me.authority === 'PATIENT' ? [] : computeAllowedModules(me.authority, me.customerId);
+        state.selectedPatientCode = me.authority === 'PATIENT' ? me.patientCode : '';
 
         for (const key of state.allowedModules) {
             state.data[key] = { current: null, online: false, lastTs: 0, history: [] };
@@ -255,15 +334,35 @@
         document.getElementById('appRoot').hidden = false;
 
         const badgeText = document.getElementById('userBadgeText');
-        const roleLabel = state.authority === 'TENANT_ADMIN'
+        const roleLabel = state.authority === 'PATIENT'
+            ? `${me.patientCode}${me.name ? ` · ${me.name}` : ''}`
+            : state.authority === 'TENANT_ADMIN'
             ? (state.lang === 'es' ? 'Administrador' : 'Admin')
             : MODULES[state.allowedModules[0]]
                 ? MODULES[state.allowedModules[0]].label[state.lang]
                 : (state.lang === 'es' ? 'Sin módulo asignado' : 'No module assigned');
-        badgeText.textContent = `${state.email} · ${roleLabel}`;
+        badgeText.textContent = state.authority === 'PATIENT'
+            ? `@${me.username || 'usuario'} · ${me.patientCode} · ${state.email}`
+            : `${state.email} · ${roleLabel}`;
+        const isPatient = state.authority === 'PATIENT';
+        document.getElementById('patientForm').hidden = isPatient;
+        document.getElementById('patientFilter').hidden = isPatient;
+        document.getElementById('stationAssignments').hidden = isPatient;
+        document.getElementById('refreshClinicalBtn').hidden = isPatient;
+        document.getElementById('patientDashboard').hidden = !isPatient;
+        document.getElementById('clinicalTitle').innerHTML = isPatient
+            ? '<i class="fas fa-notes-medical" aria-hidden="true"></i> Mi perfil e historial'
+            : '<i class="fas fa-notes-medical" aria-hidden="true"></i> Pacientes y mediciones';
+        if (isPatient) {
+            document.getElementById('patientNumber').textContent = me.patientCode;
+            document.getElementById('patientUsername').textContent = `@${me.username || me.email}`;
+            document.getElementById('patientEmail').textContent = me.email;
+            await loadPatientProfile();
+        }
 
         bindControls();
         applyStaticI18n();
+        await refreshPatients();
         await refreshAllModules();
         setInterval(refreshAllModules, APP_CONFIG.pollIntervalMs);
     }
@@ -300,7 +399,9 @@
         }
         if (!res.ok) throw new Error(`Error proxy telemetry: ${res.status}`);
         const arr = await res.json();
-        return arr.map((p) => ({ value: parseFloat(p.value), timestamp: new Date(p.ts) }));
+        return arr
+            .map((p) => ({ value: parseFloat(p.value), timestamp: new Date(p.ts) }))
+            .filter((p) => Number.isFinite(p.value) && p.value > 0);
     }
 
     async function refreshModule(moduleId) {
@@ -326,9 +427,198 @@
     async function refreshAllModules() {
         await Promise.all(state.allowedModules.map((key) => refreshModule(key)));
         renderModules();
-        renderHistory();
-        renderChart();
         updateFooterStatus();
+        if (state.selectedPatientCode) await refreshMeasurements();
+    }
+
+    // ---------------------------------------------------------
+    // Pacientes y mediciones persistidas en PostgreSQL
+    // ---------------------------------------------------------
+    async function clinicalFetch(path, options = {}) {
+        const headers = { ...authHeader(), ...(options.headers || {}) };
+        const res = await fetch(path, { ...options, headers });
+        if (res.status === 401 || res.status === 403) {
+            logout();
+            throw new Error('session_expired');
+        }
+        const data = await res.json().catch(() => ({}));
+        if (!res.ok) throw new Error(data.error || `Error ${res.status}`);
+        return data;
+    }
+
+    function setClinicalMessage(message, isError = false) {
+        const el = document.getElementById('clinicalMessage');
+        el.textContent = message || '';
+        el.classList.toggle('is-error', isError);
+    }
+
+    async function refreshPatients() {
+        try {
+            state.patients = await clinicalFetch('/api/patients');
+            const select = document.getElementById('patientSelect');
+            select.innerHTML = '<option value="">Seleccione un paciente</option>' + state.patients.map((p) => {
+                const displayName = [p.first_name, p.last_name].filter(Boolean).join(' ') || p.name || p.username || '';
+                return `<option value="${p.patient_code}">${p.patient_code}${displayName ? ` · ${displayName}` : ''}</option>`;
+            }).join('');
+            if (state.authority === 'PATIENT' && state.patients[0]) {
+                state.selectedPatientCode = state.patients[0].patient_code;
+            }
+            if (state.patients.some((p) => p.patient_code === state.selectedPatientCode)) {
+                select.value = state.selectedPatientCode;
+            } else {
+                state.selectedPatientCode = '';
+            }
+            await refreshMeasurements();
+            if (state.authority !== 'PATIENT') await loadActivePatient();
+        } catch (error) {
+            console.error(error);
+            setClinicalMessage(error.message, true);
+        }
+    }
+
+    async function loadActivePatient() {
+        try {
+            const assignments = await clinicalFetch('/api/active-patient');
+            const patientOptions = state.patients.map((p) => {
+                const displayName = [p.first_name, p.last_name].filter(Boolean).join(' ') || p.name || p.username || '';
+                return `<option value="${p.patient_code}">${p.patient_code}${displayName ? ` · ${displayName}` : ''}</option>`;
+            }).join('');
+            document.getElementById('stationAssignments').innerHTML = assignments.map((assignment) => `
+                <div class="station-assignment">
+                    <label for="active_${assignment.station_code}"><i class="fas fa-clinic-medical" aria-hidden="true"></i> ${assignment.station_name}</label>
+                    <select class="login-input station-patient-select" id="active_${assignment.station_code}" data-station="${assignment.station_code}">
+                        <option value="">Ningún paciente</option>${patientOptions}
+                    </select>
+                </div>
+            `).join('');
+            assignments.forEach((assignment) => {
+                document.getElementById(`active_${assignment.station_code}`).value = assignment.patient_code || '';
+            });
+            setClinicalMessage('');
+        } catch (error) {
+            setClinicalMessage(error.message, true);
+        }
+    }
+
+    async function setActivePatient(stationCode, patientCode) {
+        const active = await clinicalFetch('/api/active-patient', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stationCode, patientCode })
+        });
+        setClinicalMessage('');
+    }
+
+    async function refreshMeasurements() {
+        const body = document.getElementById('measurementsBody');
+        const patientView = state.authority === 'PATIENT';
+        if (!state.selectedPatientCode) {
+            state.measurements = [];
+            body.innerHTML = '<div class="history-empty">Seleccione un paciente para ver su historial.</div>';
+            return;
+        }
+        try {
+            state.measurements = await clinicalFetch(`/api/measurements?patientCode=${encodeURIComponent(state.selectedPatientCode)}`);
+            if (!state.measurements.length) {
+                body.innerHTML = '<div class="history-empty">Este paciente aún no tiene mediciones guardadas.</div>';
+                return;
+            }
+
+            const openStations = new Set(
+                [...body.querySelectorAll('details[open]')].map((el) => el.dataset.station)
+            );
+            const groups = new Map();
+            state.measurements.forEach((measurement) => {
+                if (!groups.has(measurement.station_code)) groups.set(measurement.station_code, []);
+                groups.get(measurement.station_code).push(measurement);
+            });
+
+            const stationOrder = ['SPIRO-01', 'BODY-01', 'STRESS-01'];
+            const orderedGroups = [...groups.entries()].sort((a, b) =>
+                stationOrder.indexOf(a[0]) - stationOrder.indexOf(b[0])
+            );
+            body.innerHTML = orderedGroups.map(([stationCode, rows]) => {
+                const latest = rows[0];
+                const open = openStations.has(stationCode);
+                const headers = patientView
+                    ? '<th>Valor</th><th>Fecha</th>'
+                    : '<th>Paciente</th><th>Valor</th><th>Fecha</th>';
+                const tableRows = rows.map((m) => patientView ? `
+                    <tr><td><strong>${Number(m.value).toFixed(2)}</strong> ${m.unit || ''}</td><td>${new Date(m.measured_at).toLocaleString('es-CR')}</td></tr>
+                ` : `
+                    <tr><td>${m.patient_code}${m.patient_name ? `<small>${m.patient_name}</small>` : ''}</td><td><strong>${Number(m.value).toFixed(2)}</strong> ${m.unit || ''}</td><td>${new Date(m.measured_at).toLocaleString('es-CR')}</td></tr>
+                `).join('');
+                return `
+                    <details class="station-accordion" data-station="${stationCode}" ${open ? 'open' : ''}>
+                        <summary>
+                            <span><i class="fas fa-clinic-medical" aria-hidden="true"></i> ${latest.station_name}</span>
+                            <span class="station-summary-meta">${rows.length} registros · Último: ${Number(latest.value).toFixed(2)} ${latest.unit || ''}</span>
+                        </summary>
+                        <div class="measurements-table-wrap">
+                            <table class="measurements-table"><thead><tr>${headers}</tr></thead><tbody>${tableRows}</tbody></table>
+                        </div>
+                    </details>`;
+            }).join('');
+        } catch (error) {
+            console.error(error);
+            setClinicalMessage(error.message, true);
+        }
+    }
+
+    async function loadPatientProfile() {
+        try {
+            const profile = await clinicalFetch('/api/patient-profile');
+            document.getElementById('profileFirstName').value = profile.first_name || '';
+            document.getElementById('profileLastName').value = profile.last_name || '';
+            document.getElementById('profileAge').value = profile.age || '';
+            document.getElementById('profileSex').value = profile.sex || '';
+            document.getElementById('profileHeight').value = profile.height_cm || '';
+            document.getElementById('profileWeight').value = profile.weight_kg || '';
+        } catch (error) {
+            setClinicalMessage(error.message, true);
+        }
+    }
+
+    async function savePatientProfile(event) {
+        event.preventDefault();
+        try {
+            await clinicalFetch('/api/patient-profile', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: document.getElementById('profileFirstName').value,
+                    lastName: document.getElementById('profileLastName').value,
+                    age: Number(document.getElementById('profileAge').value),
+                    sex: document.getElementById('profileSex').value,
+                    heightCm: Number(document.getElementById('profileHeight').value),
+                    weightKg: Number(document.getElementById('profileWeight').value)
+                })
+            });
+            setClinicalMessage('Información personal guardada.');
+        } catch (error) {
+            setClinicalMessage(error.message, true);
+        }
+    }
+
+    async function addPatient(event) {
+        event.preventDefault();
+        const patientCode = document.getElementById('patientCode').value.trim();
+        const name = document.getElementById('patientName').value.trim();
+        const email = document.getElementById('patientEmail').value.trim();
+        const password = document.getElementById('patientPassword').value;
+        try {
+            const patient = await clinicalFetch('/api/patients', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ patientCode, name, email, password })
+            });
+            state.selectedPatientCode = patient.patient_code;
+            event.target.reset();
+            setClinicalMessage(`Paciente ${patient.patient_code} guardado.`);
+            await refreshPatients();
+        } catch (error) {
+            setClinicalMessage(error.message, true);
+        }
     }
 
     // ---------------------------------------------------------
@@ -363,7 +653,7 @@
                 </div>
                 <div class="value-meta">${state.lang === 'es' ? 'Última lectura' : 'Last reading'}: ${mod.online ? lastTime : '—'}</div>
                 <button class="btn-acceder" data-module="${key}" type="button"
-                    aria-label="${t('access')}: ${cfg.label[state.lang]}" ${mod.online ? '' : 'disabled'}>
+                    aria-label="${t('access')}: ${cfg.label[state.lang]}">
                     ${t('access')}
                 </button>
             `;
@@ -378,92 +668,38 @@
     }
 
     // ---------------------------------------------------------
-    // Render: historial combinado
-    // ---------------------------------------------------------
-    function renderHistory() {
-        const container = document.getElementById('historyList');
-        let allEvents = [];
-        for (const key of state.allowedModules) {
-            state.data[key].history.forEach((ev) => {
-                allEvents.push({
-                    module: key,
-                    label: MODULES[key].label[state.lang],
-                    color: MODULES[key].color,
-                    unit: MODULES[key].unit[state.lang],
-                    value: formatValue(key, ev.value),
-                    timestamp: ev.timestamp
-                });
-            });
-        }
-        allEvents.sort((a, b) => b.timestamp - a.timestamp);
-        const latest = allEvents.slice(0, 6);
-
-        container.innerHTML = '';
-        if (latest.length === 0) {
-            container.innerHTML = `<div class="history-empty">${t('historyEmpty')}</div>`;
-            return;
-        }
-        latest.forEach((ev) => {
-            const item = document.createElement('div');
-            item.className = 'history-item';
-            item.innerHTML = `
-                <span class="history-module"><i class="fas fa-circle" style="font-size:0.5rem; color:${ev.color}; margin-right:6px;" aria-hidden="true"></i>${ev.label}</span>
-                <span class="history-value">${ev.value} ${ev.unit}</span>
-                <span class="history-time">${formatTime(ev.timestamp)}</span>
-            `;
-            container.appendChild(item);
-        });
-    }
-
-    // ---------------------------------------------------------
-    // Render: gráfico de barras + leyenda
-    // ---------------------------------------------------------
-    function renderChart() {
-        const container = document.getElementById('chartBars');
-        let bars = [];
-        for (const key of state.allowedModules) {
-            const hist = state.data[key].history.slice(0, 3);
-            hist.forEach((ev) => bars.push({ module: key, value: ev.value }));
-        }
-
-        container.innerHTML = '';
-        bars.forEach((bar) => {
-            const cfg = MODULES[bar.module];
-            let height = 20 + (bar.value / cfg.max) * 100;
-            height = Math.min(120, Math.max(20, height));
-            const item = document.createElement('div');
-            item.className = 'bar-item';
-            item.innerHTML = `<div class="bar" style="height:${height}px; background:${cfg.color};" title="${cfg.label[state.lang]}: ${formatValue(bar.module, bar.value)} ${cfg.unit[state.lang]}"></div>`;
-            container.appendChild(item);
-        });
-
-        const legend = document.getElementById('chartLegend');
-        legend.innerHTML = state.allowedModules.map((key) => `
-            <span><span class="legend-dot" style="background:${MODULES[key].color};"></span>${MODULES[key].label[state.lang]}</span>
-        `).join('');
-    }
-
-    // ---------------------------------------------------------
     // Modal de detalle de módulo
     // ---------------------------------------------------------
-    function openModuleModal(moduleId) {
+    async function openModuleModal(moduleId) {
         const cfg = MODULES[moduleId];
         const mod = state.data[moduleId];
         const modal = document.getElementById('moduleModal');
         document.getElementById('modalTitle').textContent = cfg.label[state.lang];
 
+        let patientLabel = 'Sin paciente asignado';
+        if (state.authority === 'TENANT_ADMIN' && mod.lastTs) {
+            const stationCodes = { spiro: 'SPIRO-01', body: 'BODY-01', stress: 'STRESS-01' };
+            try {
+                const saved = await clinicalFetch(`/api/latest-station-measurement?stationCode=${stationCodes[moduleId]}`);
+                if (saved && Number(saved.source_ts) === Number(mod.lastTs)) {
+                    patientLabel = `${saved.patient_code}${saved.patient_name ? ` · ${saved.patient_name}` : ''}`;
+                }
+            } catch (error) {
+                console.error(error);
+                patientLabel = 'No disponible';
+            }
+        }
+
         const rows = [
             [t('modalDevice'), moduleId.toUpperCase() + '-01'],
             [t('modalStatus'), mod.online ? t('online') : t('offline')],
-            [t('modalLastValue'), mod.online ? `${formatValue(moduleId, mod.current)} ${cfg.unit[state.lang]}` : '—'],
-            [t('modalReadings'), String(mod.history.length)]
+            [t('modalLastValue'), mod.current !== null
+                ? `${formatValue(moduleId, mod.current)} ${cfg.unit[state.lang]}`
+                : '—']
         ];
 
         if (state.authority === 'TENANT_ADMIN') {
-            const avg = mod.history.length
-                ? mod.history.reduce((s, e) => s + e.value, 0) / mod.history.length
-                : 0;
-            rows.push([state.lang === 'es' ? 'Promedio (últimas)' : 'Average (recent)', `${avg.toFixed(cfg.decimals)} ${cfg.unit[state.lang]}`]);
+            rows.push(['Paciente de la última medición', patientLabel]);
             rows.push(['MQTT topic', 'v1/devices/me/telemetry']);
         }
 
@@ -502,8 +738,6 @@
     function renderAll() {
         applyStaticI18n();
         renderModules();
-        renderHistory();
-        renderChart();
         updateFooterStatus();
     }
 
@@ -522,6 +756,21 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', logout);
+        document.getElementById('patientForm').addEventListener('submit', addPatient);
+        document.getElementById('profileForm').addEventListener('submit', savePatientProfile);
+        document.getElementById('patientSelect').addEventListener('change', async function () {
+            state.selectedPatientCode = this.value;
+            await refreshMeasurements();
+        });
+        document.getElementById('stationAssignments').addEventListener('change', async function (event) {
+            if (!event.target.classList.contains('station-patient-select')) return;
+            try {
+                await setActivePatient(event.target.dataset.station, event.target.value);
+            } catch (error) {
+                setClinicalMessage(error.message, true);
+            }
+        });
+        document.getElementById('refreshClinicalBtn').addEventListener('click', refreshPatients);
 
         document.getElementById('modalClose').addEventListener('click', closeModal);
         document.getElementById('moduleModal').addEventListener('click', function (e) {

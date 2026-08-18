@@ -1,19 +1,35 @@
 // ================================================================
+import { query } from './_db.js';
 // Proxy serverless: reenvía el token de sesión del usuario logueado
 // (obtenido en /api/auth) hacia ThingsBoard. Ya NO se loguea con una
 // cuenta fija: así ThingsBoard aplica sus propios permisos por
 // Customer y bloquea automáticamente el acceso a módulos ajenos.
 // ================================================================
 
-const TB_BASE_URL = process.env.TB_BASE_URL; // ej: https://api.medstation.online
+const TB_BASE_URL = process.env.TB_BASE_URL || 'http://localhost:8080';
 
 const DEVICE_IDS = {
-    spiro: '3b34e6f0-9549-11f1-a210-4586a442bb3a',
-    body: '54676710-9549-11f1-a210-4586a442bb3a',
-    stress: '63b60320-9549-11f1-a210-4586a442bb3a'
+    spiro: '25b60360-96d2-11f1-8613-25d51c94920b',
+    body: '0421ca00-96e0-11f1-8613-25d51c94920b',
+    stress: '33ced630-96e0-11f1-8613-25d51c94920b'
 };
 
 const TELEMETRY_KEY = 'value';
+const STATION_CODES = { spiro: 'SPIRO-01', body: 'BODY-01', stress: 'STRESS-01' };
+const UNITS = { spiro: 'L', body: '% grasa', stress: '% HRV' };
+
+async function saveForActivePatient(device, point) {
+    const value = Number(point?.value);
+    if (!point || !Number.isFinite(value) || value <= 0 || !Number.isFinite(Number(point.ts))) return;
+    await query(`
+        INSERT INTO measurements (patient_id, station_id, value, unit, measured_at, source_ts)
+        SELECT a.patient_id, s.id, $2, $3, TO_TIMESTAMP($4 / 1000.0), $4
+        FROM stations s
+        JOIN station_active_patient a ON a.station_id = s.id
+        WHERE s.station_code = $1 AND a.patient_id IS NOT NULL
+        ON CONFLICT (station_id, source_ts) WHERE source_ts IS NOT NULL DO NOTHING
+    `, [STATION_CODES[device], value, UNITS[device], Number(point.ts)]);
+}
 
 async function tbFetch(path, token) {
     const res = await fetch(`${TB_BASE_URL}${path}`, {
@@ -57,6 +73,7 @@ export default async function handler(req, res) {
         } else {
             const path = `/api/plugins/telemetry/DEVICE/${deviceId}/values/timeseries?keys=${TELEMETRY_KEY}`;
             const json = await tbFetch(path, token);
+            await saveForActivePatient(device, (json[TELEMETRY_KEY] || [])[0]);
             res.status(200).json(json[TELEMETRY_KEY] || []);
         }
     } catch (err) {

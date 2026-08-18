@@ -13,7 +13,8 @@ export default async function handler(req, res) {
     }
 
     try {
-        const tbRes = await fetch(`${process.env.TB_BASE_URL}/api/auth/user`, {
+        const tbBaseUrl = process.env.TB_BASE_URL || 'http://localhost:8080';
+        const tbRes = await fetch(`${tbBaseUrl}/api/auth/user`, {
             headers: { 'X-Authorization': `Bearer ${token}` }
         });
 
