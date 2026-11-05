@@ -4,7 +4,16 @@
 tenant@thingsboard.org
 http://localhost:3000/
 
+ # Iniciar sesión como administrador
 
+  Selecciona:
+
+  Administrador / técnico
+
+  Credenciales:
+
+  Correo: tenant@thingsboard.org
+  Contraseña: tenant
 
 Sistema académico para recibir telemetría de estaciones médicas, asociar mediciones automáticamente con un paciente activo y permitir que cada paciente consulte su historial.
 

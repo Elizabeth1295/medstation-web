@@ -1,0 +1,1043 @@
+<claude-code-hint v="1" type="plugin" value="vercel@claude-plugins-official" />
+Vercel CLI 58.10.0 (Node.js 24.16.0)
+Retrieving project…
+> Ready! Available at http://localhost:3000
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AssertiAssertion failed: o!(handle->flags & UV_HAn failedNDLE_CLOSING), file : s!(hanrc\win\async.c, line 94
+dle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\winAsserti\asoync.c, line n failed: !(handle->fl94
+ags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\wAsin\asesync.cr, tline 94
+ion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed:A s!(handle->flags & UV_HANDLE_CLOSIsertNion faG), ilfeile src\win\asydnc.c:,  line !9(4h
+andle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AsAssertiosnertion failed:  failed: Assertion faile!!(handle->flad(handle-:gs > &f!(handle->flags & UV_HAND UV_Hlags & UV_HANDLE_CLOSIANDLE_CLNLOSING)E_CLOSING), ,Gfile src\win\async.c), file , line 94
+s rfci\lewin\async.c, line  94
+src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), fAiles sesrtirocn\ wfian\aislyendc:. c!(,h anldilnee- >9f4l
+ags & UV_HANDLE_CLOSING), fAile src\win\asynscsertio.nc failed: ,!(ha nlindle->ef 94
+lags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flagsA s& sUVe_HrAtNiDoLnE _CfALasOiled: !(handle->flagSss & UV_HANDLE_CLOSING)eI,rtionN  faifile src\wlGin\async)ed:., ! c(file , src\win\async.chl, liiandle->nnflage 94
+es  &9 4UV_HAN
+DLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UAV_HANDLsEsertion_ CLOSIAfaiNsled: !sG(hande)lrte,ion  -ff>flags & UV_HaiAilNDe src\win\async.c, line Ll9Ee4_d:CL 
+O!(SINhandle->flags & UV_HANDLE_CG), LfOSIiNle src\wG), fin\asyincl.c,e line  9s4r
+c\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file srAc\swsiern\asyntc.c,i online 94 f
+ailed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.cAssert, line 94
+ion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSIAsNG),sertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line  fi94
+le src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: A!(handle->flagss se&r tiUon failed: !(hanV_dHle->fAlags & UV_NHDALNEDLE_CLOSING), file _srCLcOSI\NGw)in\, file src\win\async.c, line a9sync.c, line 49
+4
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: As!(handslerte->iofn lagsfa & UiV_HAleNdD:LE !_(hCaLOSnINdG), filel se->frlca\gs & UV_HANwDin\async.c, LE_CLOSING), file srlci\nwe in\async.c94
+, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & AUV_HsseANDLErt_CLOSING), file src\wiinon faile\dasync.c, line 94
+: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags A&s sUV_HAertionAssert NifDon aLE_CLOSIfNiaGli), file srleced: !(\dhw: iandle->flags & UV_HANDLE_CLOSING), filen! \(sasync.rhcca, n\win\async.c, line 94
+dllien->fel a94
+gs & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+error: deadlock detected
+    at C:\Users\User\OneDrive - Estudiantes ITCR\Documentos\Semestre 9\INTEGRADOR\medical-station-web\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async query (file:///C:/Users/User/OneDrive%20-%20Estudiantes%20ITCR/Documentos/Semestre%209/INTEGRADOR/medical-station-web/api/_db.js:101:5)
+    at async saveForActivePatient (file:///C:/Users/User/OneDrive%20-%20Estudiantes%20ITCR/Documentos/Semestre%209/INTEGRADOR/medical-station-web/api/telemetry.js:24:5)
+    at async handler (file:///C:/Users/User/OneDrive%20-%20Estudiantes%20ITCR/Documentos/Semestre%209/INTEGRADOR/medical-station-web/api/telemetry.js:76:13) {
+  length: 314,
+  severity: 'ERROR',
+  code: '40P01',
+  detail: 'Process 360 waits for AccessExclusiveLock on relation 20409 of database 20388; blocked by process 359.\n' +
+    'Process 359 waits for RowShareLock on relation 20390 of database 20388; blocked by process 360.',
+  hint: 'See server log for query details.',
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: undefined,
+  table: undefined,
+  column: undefined,
+  dataType: undefined,
+  constraint: undefined,
+  file: 'deadlock.c',
+  line: '1147',
+  routine: 'DeadLockReport'
+}
+AssertAssertion failed: ion f!(haailAed: !(handle->flsagndle->flags & UVssertion_HANDLE_CLOSING), file src\win\asy  fai& UV_HANDLE_CLOSInc.cNG, li), lfile src\win\asynecne 94
+.cd, : lin!(hane 94
+dle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion Afailed: !(handle->fsselrationg sf a&ile dU:V !_(HhAaNndDlLe->flags &E UV_HANDLE_CL_CLOSIOSNIGN)G,) ,f ifliel ser cs\rwci\nw\iasynnc.\cas,Aync s.lscie,nr line 94
+e t94ion 
+failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->fAssertion failelags &Ad s: sertiUV_HANDLE_CLOSING)o!(handlen failed->f,:l  ags & UV_H!fANDLE_CLOSING)i(handle->flags & UV_l,He ANDLE_CLOSING f), file ilsrc\win\asyncse rc\win\.src\winc\async.c, li, line 94an
+seync.c, li ne94
+ 94
+Assertion failed: !(handle->flAssertion agfais & UVled: Assertion failed!(hand:_le->f HANlags & UV_H!(handle->flags & UV_HANDLE_CLOSIDANLNG),ED fLE_CL_COSING), fileLi Ole src\win\async.cSsrING), file src\win\async.cc,, line 94
+ \lwine 94
+in\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\wAin\asyncs.c, lisne e94
+rtion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AsserAssteriotn ifailoedn:  f!a(ihlandelde:- >flags & U!V(_handleH->fAlaNgDsL E& _UV_HANDACLsLOsE_CLOSISeNG), INfiGrl)te,i  osfnrc i\flwin\async.cea, i sllreicd: n\!ew(ha 9nd4
+lien\async.c, line 94
+->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(hanAdslse-e>rftlags & iUV_HANDLE_Con failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+LOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AssertionAsse frtaion fiailAselsd:ee rt!(id:oh n !andl(hanefdle->failed-l:>ags & flags U &V_H!(haA ndle->flaNDgs & UV_HANDLUVE_CLOSING)_L,HANE_D fLE_Cile src\win\async.LCLOSIc, lNG),iO nSfeIi NG),9l fe src\ile src\win\async4
+.win\ca,sy ncline.c, line 94 9
+4
+AssertionA faislsertioen faild: !(haed: !(handle->flags & UV_HANDLndEl_e->CLOfSIlagsNG), A & UVfs_isHleAertion failed: !( Nhsrc\win\aDasync.c, linLneE_ dle->flags & U9CLOSING), file4V_HANDLE_CLOS 
+IsNrGc\), file src\wwiinn\\async.asycn,c l.icn, el 9i4
+ne 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(hanAssertiondle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+ failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, Assertlion ine fa94
+iled: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), filAes sseArrscts\iewortnii nof\naa failedisync.c,:l  !ledi(:nh ea! nd94le->f(
+lags handle->fl&a UVg_s HANDLE_C& UVL_HOASNDLE_ING), file CLsOSING), rfile cs\win\asrcy\nwic.cn,\async.c, line 94
+ line 94
+Assertion failed: !(handle-As>serftlaigon fais & UVl_HANDeLdE_CL: O!(handleSING)->flag, fs & ile srUAcVs\_swHeiArn\tNaiosync.c, nDline 94
+L faEi_lCLeOdS: !(haInNdGle->)f,l afgisl e& sr c\win\aUVs_HANDLE_CLOSING),ync.c ,f ille isrcne \94win\as
+ync.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING),Assertion failedA :ssertfile src\win\aion failedsync.c: , line  !94(handle->flags & U
+!(haV_HANDLE_nCLOdSING), fille->flags & UV_HAe src\win\Nasync.c, line 94
+DLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_ACsLsOertion failed: S!I(hNaG)ndle-,>flags &  UfV_HilAeN sDLE_CLOSING), file src\rc\win\async.cw, linein\async.c, line 94
+ 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLAE_CssertionLOSING), failed :file src\w !(hanindle->fla\gs & UV_HANDLE_CLOSING)Assertion fa,as iled: filync.c!e, line 94
+ (shandle->frlagc\s & UV_HANDLEwin\async.c_CLOSING), file , line s94
+rc\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle-Ass>efrlatigosn & UV_H failed: ANDLE_CLOSING)!(hA, safsndle->flags & UV_HANeiDLle src\win\asynrEct_CLOSIN.c, G)li,ion fain led: !(handle->flags & UV_HANDLE_CLOSING)e ,file 9 s4fr
+ic\win\le async.c, sline r94
+c\win\async.c, line 94
+Assertion failed: !(handle->flags &Asse UV_HrtANDLEion fail_CLOed:SING), file  s!(handle->flags & UV_HANDLE_CLOSINrc\win\async.c, line 94
+G), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)A,ssertion fa fileidl:e src \win\async.c, line !94
+(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !A(hansdles-erti>folangs  & fUV_HANDLE_CLOaSING), filei lsrced\w:in\as yn!c(.c,h alnine 94d
+le->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: Ass!(hertioandle->flags n fa& UV_HANDiledLE_: CLOSING)!(ha, file srnc\wdle->fin\async.cl,ag line s & UV_HANDL9E_CL4OSING)
+, file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\asynAc.cssertio, linne 94 f
+ailed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSIANsGsertion )failed: ,! fi(handlele -src\win\async.c, line >flags & UV_HAND94L
+E_CLOSING), file src\win\async.c, line 94
+AsserAtssertioni ofn faialielde:d :! (!(hahandle->flnagdlse- & U>flaV_HANDLEgs _&CA UssVLOSING), fie_leHANr srctDLE_CLOSING)\,iwin\asyno file src\win\async.c, line 94
+c.c, line 94
+n failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AssertioAns fseratiiloend :f a!(ihlaendd:l e!-(>hfalnagdsl e&- >fUlVa_HgAsN D&L EUA_VsCLsertion O_failed: HS!ANDLE_(handle->flagICs & UV_HANLNDLE_CLOSING)GO, file )Ssrc\win\a, file srIsc\yNwin\asynGnc)c.c,,. lc i,fn iell ie9n 4es
+ rc9\4
+win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AsseArsserttion ion failed: !(handlfailed: e->flags & UV_HANDLE_CLOS!(handle->flags & UV_HANDLE_CLOSING)ING), file src\win, file src\win\async.c, line 94
+\async.cAss,e line 94
+rtion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UVA_ssHAertion failed: !(haNndle->flags & UV_HANDLE_CLDLE_OSCLIONSGING), )f,i lfe sirlc\win\async.c, line 94
+e src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\Aasyncss.ce,rtion  failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line l94
+ine 94A
+ssertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(hAssearndle->flags &ti on UVfaile_d: HA!NDLE_(hanCdlLOeS-I>NflaG)g, sf &i leU V_HANDLE_CLOSsrc\win\async.c, lIine NG), file src\94
+win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.Asserction faile,d:  !l(ihandle->flags & UV_nHANDLEe 94
+_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(Ashsaertion failed:ndle->fla !gs & UV_HANDLE(han_CLOdSING), filele sr-c\win>f\alsync.c, line a94g
+s & UV_HAANDLE_CLOSINsGs)er, file tion failed: !(handsle->flags & UVr_c\HANDLE_CLwOin\async.cS,ING), f illei nserc\wi 94
+n\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AsseArssteion failed: !(handlre-tion failed:>flag s & UV_HANDLE_CLOSING)A!, (handle-fs>flags is& elUV_HANDLErtion faie_led src\win\a: sCLOSING)ync.c, l,!(handle->flags & UV_HANDLE_CLOSING) file , file src\win\async.c, linise 94
+nrec \94win
+\async.c, line 94
+Assertion failed: A!(hsasertion failed: !(handle->flags & UV_ndle->flags & UV_HANDLE_CLOSING)HANDLE,_CL file Osrc\win\async.c, line 94
+SING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UAsserV_HANDLE_CLOSING), file src\win\asytion failed: !(handle-An>scfsertiolags & UV_n faHANDLE_CLOSING).c, li, file iled: !(handle->flagsns & UV_HANDLE_CLOreSING), file c src\win\as94
+\ywnc.cin\async,.c line , line9 94
+4
+Assertion failed: !(handle->flags & UV_HANDAsLE_CLOSIsNG)erti, file osrc\n failed: win\aA!(hassertion failedsn: dle-!(handle->fl>flaags & UV_HANgs yD&nL UV_HcEANDLE__.cCLOSING), line C,94 fil
+LeO src\win\async.cSING), line 94
+, file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSIANsGs), ertiofn file ailed:s rc\!(handlwien->flags &\asy ncU.V_HANcD,LE_CLOSI line N94G)
+, file src\win\async.c, line A9s4
+sertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), fiAlse src\win\asyncAs.c, liesnesertion fair ltion failed: !(he9andle->fla4dg
+:s  !& UV(_HANDLE_CLOSINGh)andle->flags & UV_, file src\HwAin\NDaLsync.c,E l_iCnLeOSING), f i9le src\4w
+in\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING),AsserAtion fs asfieilrlete sdirco:\n w !if(handle->flags n\aail& UV_HANDLE_CLOSING), fileed: ! sysrc\win(nch\aansync.c, l.dle->flags & UV_HANDciL,nE_CLOSING), e 94l 
+ifilene sr c\w94in\as
+ync.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: A!s(shandelre->flatgiso n&  UV_HAfNaDiLlAEes_dsC:eL rO!tion failed: S(!Ih(Nandle->hGfa)ln,ad glfseile src\win\async.c ->flags &,&   UlUViV_HANDn_LeHE_CLOSING), fileA  NDs9LE4r_
+cC\wiLnOSING)\,a sync.cf,ile  line 94
+src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, Alsisenre 94
+tion failed: !(handle->flags & UV_HANDLE_CLOSIANssGe), rftiilon faiel esdr:c \!w(ihna\nasyncd.lce, l-i>nfela g94s
+ & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: A!s(sheanrdtle->iflaogns  f&a iUlVe_dH:A N!D(handle->flags & UV_HANDLE_LCLOSING), file Es_CrLcO\SwIiNnG\async.c),,  fliilnee sr 94c
+\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->fAlagss &s eUV_HANDLEr_tCiLOoSn IfNG), fialiel ed: !s(rhca\ndwin\async.lce,- li>nfelag s & 94U
+V_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AsAssertion faislertion failed: eA!ds(handle->:sflags & e !rtion failed: !(hand(hlUaeVn->flags & UV_HANDLE_CLOSING), file _dsrc\win\async.cHl, line ANDLE_CLOe->flaS9gI4sN
+ G), file & UV_HANDLsrc\wEi_n\aCLOsSyInNc.Gc), ,l ifniele  s94r
+c\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->AfslAsagessrtion  sf&ea rtioUinV_HANDLled:  E_CLOSI!failed:NG), file  !(ha(handle->flags & UV_HAnsNDrc\win\asyLdle->flnE_Cags & UV_HANDLE_CLOSING), fcLile O.src\win\async.c, line 94
+ScI, line 9N4
+G), file src\win\async.c, line 94
+Assertion failed: !(hAssertion failed: a!n(handle-d>lfel->afgsl a&gs  U&V _HANDLE_CLUAOVsS_sIHeNGrA)tN, file src\win\async.c, line 94DioL
+nE failed: !(handle-_>CLOSING)flag,s  & UVfil_eH AsNrDcLE_\wiCnL\OaSsIyNnGc).c,,  fliilnee  9s4r
+c\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)A, file ssrc\wsienr\asynct.ci,o nl ifnailede:  !94
+(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion Assertion faiflailed: !(haedndle-:>flags &  !U(haV_nHdle->flags A&N DLUEV_HANDLE_CLOSING)_,CL OfSiING), file lsrc\win\eas ynsrc.cc\wi,n\ alsiyne nc.c, lin9e4
+ 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANADsLsE_eCrALOSING),st sifeoirn failed: !(handle->tlfielon failed: !(ha ansgdrsle-> cflags & UV_HANDLE_CLOSING)\win\asy,&n fc i.UlcVe,_ sH rAline 94
+NcD\Lwin\aEsy_nc.c, line C94
+LOSING), file src\win\async.c, line 94
+AsserAstisoenr Atfsiaiosleertndio: !(han n fdle->flagsfa ai&il leUedVd: !(h_:aH !An(NdlDhe-an>LdfEll_eaC-gL>flags & UV_HAOs SN&ID NLE_CLOSING), fiUV_G)Hl, eAfiN lesD rc\win\async.c, line 94
+sLrcE_\CwLOSING), file src\win\asyncin\async.c, line 94
+.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(hanAdsslee-r>tfliaogns  &f aUileV_dH: A!NDL(E_haCLOSING), nfdliele- >sflarc\wing\sa s&ync .UcV,_ HAlNiDnLeE _CL9O4S
+ING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+AsseAsserrttiioonn  ffailed: ailed: !(!(handle->flags & handle->UV_HANDLE_CLOSINGf), file lags & UV_HANDLE_CLOSINGsrc\win\async.c, line 94
+), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: Assertion failed: !!((handle->flags & UhVa_HANDLE_CLOSING),n dflie->flags & UV_HANDLE_CLOSING), file lsrc\e srwcin\async\.wci, nl\async.c, line 94
+ine 94
+Assertion failed: !(handle->flags & UV_HANDLE_CAsLsOSING), file srce\wrtion ifani\alsync.c, line 94
+ed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flagsAsser t&i Aon fsUasVie_lrHetAdio: !Nn(D hLfaEan_idClleeL-d: O>!Sf(IlhNaandle->flags &gG UVs)_ ,HANDLE &_f CiULOSINlVGe ), fils_e srHrcAc\N\wiwinDn\L\aEas_syCynLnc.c,cO .c, linelSING),in file e 9 src\win\a494
+s
+ync.c, line 94
+Assertion failed: A!s(shearntdile->flagosn  &f ailed: U!V(_hHAaNnDdLlEe->_CLOSfIlaNgGsA) s,& UV_HAN sDfeLirE_CLOSING), tlfieionl  esfar icsl\weridcn\a:\sywin\async.c !(handle->f,nl c.c, lline ia9ne4
+ 94
+gs & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANADssertion failed:ALE_ ssertion failed: !(handle->flags & C!UL(V_HANDLE_COhLSandle->flags &ING), file src\wiO nSU\aVIN_GsH)yn,Ac N.fDciL,lE linee_  C9sL4rOSING)c
+,\ wfiinl\ea ssrycn\cw.cin,\ alisnyen c9.c, l4i
+ne 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.cA,s sleirtnieo n9 4f
+ailed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion fAsailsede: r!t(handle-iA>onfs lsfaeagristl ie&od n:U  !(hfV_HAailaNDLE_CLOSINGne)dd,l: e !(fh-ile >flagassnd &lr ec\win-U\>Vas_fyHlnAacNDLE_CLgs &OS UI.cNV_H,G) A,lNDL iEfi_ne 9Cl4
+e sLOSING),rc\win\as file src\win\asyncync.c, line 94
+.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line AA9ss4sertion 
+sfeartiioled: !n(handle fa-i>fllaegs & UV_HANDLE_CLOSING)d,:  f!i(lhaen dslrec-\>wfliang\s & UV_HANDLE_CLOSING), file assrcy\wnic.nc\,a line sync.c94
+, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING)Assert, file src\win\async.c, line 94
+ion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.cAssertion failed: !(handle->flags & UV_HANDLE_CLOSING), fil, line 94
+e src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\winA\assynsce.rtico,n  lfaiinlee d9: 4
+!(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Assertion failed: !(handle->flags & UV_HANDLE_CLOSING), file src\win\async.c, line 94
+Error: Function `api/telemetry.js` failed with exit code 3221225794
+Error: Function `api/telemetry.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/telemetry.js` failed with exit code 3221225794
+Error: Function `api/telemetry.js` failed with exit code 3221225794
+Error: Function `api/telemetry.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/telemetry.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794
+Error: Function `api/measurements.js` failed with exit code 3221225794

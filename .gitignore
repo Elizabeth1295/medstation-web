@@ -20,6 +20,12 @@ infra/cloudflared/config.yml
 *.backup
 *.bak
 
+# Tokens de dispositivos (privados)
+tokens.txt
+run-spiro.bat
+run-body.bat
+run-stress.bat
+
 # Sistema
 .DS_Store
 Thumbs.db
