@@ -54,6 +54,9 @@ export function ensureSchema() {
                 measured_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
             );
             ALTER TABLE measurements ADD COLUMN IF NOT EXISTS source_ts BIGINT;
+            -- Pieza 2: guarda TODAS las metricas de una medicion (peso, grasa, FFM,
+            -- agua, musculo, hueso, IMC, metabolismo, R, X, fase...) en un solo objeto.
+            ALTER TABLE measurements ADD COLUMN IF NOT EXISTS metrics JSONB;
             CREATE UNIQUE INDEX IF NOT EXISTS measurements_station_source_unique
                 ON measurements (station_id, source_ts) WHERE source_ts IS NOT NULL;
 

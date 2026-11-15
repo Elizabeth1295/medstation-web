@@ -334,6 +334,9 @@ select:focus-visible,
 .station-accordion[open] summary::after { transform: rotate(180deg); }
 .station-accordion[open] summary { background: var(--color-primary-light); }
 .station-summary-meta { margin-left: auto; font-size: 0.75rem; font-weight: 500; color: #6e89a8; }
+.metric-chips { display: flex; flex-wrap: wrap; gap: 5px 8px; margin-top: 6px; }
+.metric-chip { font-size: 0.72rem; color: var(--color-text-secondary); background: var(--color-primary-light); border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
+.metric-chip strong { color: var(--color-primary); }
 .station-accordion .measurements-table-wrap { margin: 0; max-height: 300px; border: 0; border-radius: 0; }
 .patient-dashboard { display: grid; grid-template-columns: minmax(220px, 0.65fr) 2fr; gap: 20px; margin: 8px 0 22px; }
 .patient-dashboard[hidden] { display: none; }

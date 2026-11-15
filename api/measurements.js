@@ -21,7 +21,7 @@ export default async function handler(req, res) {
                 SELECT m.id, p.patient_code,
                        COALESCE(NULLIF(CONCAT_WS(' ', p.first_name, p.last_name), ''), p.name, p.username) AS patient_name,
                        s.station_code, s.name AS station_name,
-                       m.value, m.unit, m.measured_at
+                       m.value, m.unit, m.measured_at, m.metrics
                 FROM measurements m
                 JOIN patients p ON p.id = m.patient_id
                 JOIN stations s ON s.id = m.station_id

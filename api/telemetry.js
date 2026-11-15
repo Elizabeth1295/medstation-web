@@ -17,18 +17,58 @@ const DEVICE_IDS = {
 const TELEMETRY_KEY = 'value';
 const STATION_CODES = { spiro: 'SPIRO-01', body: 'BODY-01', stress: 'STRESS-01' };
 const UNITS = { spiro: 'L', body: '% grasa', stress: '% HRV' };
+// Metrica "principal" que se muestra en el tablero y en la columna Valor.
+// El modulo de body envia la grasa en 'value' (y tambien en 'gp').
+const PRIMARY_KEY = { spiro: 'value', body: 'value', stress: 'value' };
+
+// Claves de control que el modulo manda pero NO son mediciones clinicas.
+const IGNORED_KEYS = new Set(['id', 'persona_ok']);
+
+// Convierte la respuesta de ThingsBoard ({ value:[{ts,value}], peso:[...], ... })
+// en un punto con: metrica principal (value), timestamp y TODAS las metricas.
+// Solo toma las claves de la MISMA medicion (mismo ts) para no mezclar datos
+// viejos de otras pruebas que queden guardados en ThingsBoard.
+function buildPoint(device, json) {
+    const keys = Object.keys(json || {});
+    if (!keys.length) return null;
+
+    let maxTs = null;
+    for (const key of keys) {
+        const latest = (json[key] || [])[0];
+        if (!latest) continue;
+        const t = Number(latest.ts);
+        if (Number.isFinite(t) && (maxTs === null || t > maxTs)) maxTs = t;
+    }
+    if (maxTs === null) return null;
+
+    const metrics = {};
+    for (const key of keys) {
+        if (IGNORED_KEYS.has(key)) continue;
+        const latest = (json[key] || [])[0];
+        if (!latest) continue;
+        const t = Number(latest.ts);
+        if (!Number.isFinite(t) || (maxTs - t) > 5000) continue; // solo la medicion mas reciente
+        const num = Number(latest.value);
+        metrics[key] = Number.isFinite(num) ? num : latest.value;
+    }
+
+    const primaryKey = PRIMARY_KEY[device] || TELEMETRY_KEY;
+    let value = Number(metrics[primaryKey]);
+    if (!Number.isFinite(value)) value = Number(metrics[TELEMETRY_KEY]);
+    return { value, ts: maxTs, metrics };
+}
 
 async function saveForActivePatient(device, point) {
     const value = Number(point?.value);
     if (!point || !Number.isFinite(value) || value <= 0 || !Number.isFinite(Number(point.ts))) return;
     await query(`
-        INSERT INTO measurements (patient_id, station_id, value, unit, measured_at, source_ts)
-        SELECT a.patient_id, s.id, $2, $3, TO_TIMESTAMP($4 / 1000.0), $4
+        INSERT INTO measurements (patient_id, station_id, value, unit, measured_at, source_ts, metrics)
+        SELECT a.patient_id, s.id, $2, $3, TO_TIMESTAMP($4 / 1000.0), $4, $5::jsonb
         FROM stations s
         JOIN station_active_patient a ON a.station_id = s.id
         WHERE s.station_code = $1 AND a.patient_id IS NOT NULL
         ON CONFLICT (station_id, source_ts) WHERE source_ts IS NOT NULL DO NOTHING
-    `, [STATION_CODES[device], value, UNITS[device], Number(point.ts)]);
+    `, [STATION_CODES[device], value, UNITS[device], Number(point.ts), JSON.stringify(point.metrics || {})]);
 }
 
 async function tbFetch(path, token) {
@@ -62,19 +102,23 @@ export default async function handler(req, res) {
     }
 
     try {
+        const primaryKey = PRIMARY_KEY[device] || TELEMETRY_KEY;
+
         if (type === 'history') {
             const limit = req.query.limit || 10;
             const endTs = Date.now();
             const startTs = endTs - 60 * 60 * 1000;
             const path = `/api/plugins/telemetry/DEVICE/${deviceId}/values/timeseries` +
-                `?keys=${TELEMETRY_KEY}&startTs=${startTs}&endTs=${endTs}&limit=${limit}&orderBy=DESC`;
+                `?keys=${primaryKey}&startTs=${startTs}&endTs=${endTs}&limit=${limit}&orderBy=DESC`;
             const json = await tbFetch(path, token);
-            res.status(200).json(json[TELEMETRY_KEY] || []);
+            res.status(200).json(json[primaryKey] || []);
         } else {
-            const path = `/api/plugins/telemetry/DEVICE/${deviceId}/values/timeseries?keys=${TELEMETRY_KEY}`;
+            // Trae TODAS las claves de telemetria del dispositivo (sin filtrar por keys).
+            const path = `/api/plugins/telemetry/DEVICE/${deviceId}/values/timeseries`;
             const json = await tbFetch(path, token);
-            await saveForActivePatient(device, (json[TELEMETRY_KEY] || [])[0]);
-            res.status(200).json(json[TELEMETRY_KEY] || []);
+            await saveForActivePatient(device, buildPoint(device, json));
+            // El tablero solo necesita la metrica principal.
+            res.status(200).json(json[primaryKey] || json[TELEMETRY_KEY] || []);
         }
     } catch (err) {
         console.error(err);

@@ -24,7 +24,6 @@ export default async function handler(req, res) {
             const age = Number(req.body?.age);
             const sex = String(req.body?.sex || '').toUpperCase();
             const heightCm = Number(req.body?.heightCm);
-            const weightKg = Number(req.body?.weightKg);
 
             if (!firstName || firstName.length > 100 || !lastName || lastName.length > 100) {
                 return res.status(400).json({ error: 'Nombre y apellido son obligatorios' });
@@ -38,15 +37,13 @@ export default async function handler(req, res) {
             if (!Number.isFinite(heightCm) || heightCm < 50 || heightCm > 250) {
                 return res.status(400).json({ error: 'La altura debe estar entre 50 y 250 cm' });
             }
-            if (!Number.isFinite(weightKg) || weightKg < 2 || weightKg > 500) {
-                return res.status(400).json({ error: 'El peso debe estar entre 2 y 500 kg' });
-            }
 
+            // El peso ya no se pide a mano: lo mide y lo envia el modulo de body.
             await query(`
                 UPDATE patients SET first_name=$1, last_name=$2, age=$3,
-                    sex=$4, height_cm=$5, weight_kg=$6
-                WHERE id=$7
-            `, [firstName, lastName, age, sex, heightCm, weightKg, session.patientId]);
+                    sex=$4, height_cm=$5
+                WHERE id=$6
+            `, [firstName, lastName, age, sex, heightCm, session.patientId]);
             const result = await query(profileSelect, [session.patientId]);
             return res.status(200).json(result.rows[0]);
         }

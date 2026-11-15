@@ -4,6 +4,51 @@ import { requireAdmin } from './_auth.js';
 const stationOrder = `CASE s.station_code
     WHEN 'SPIRO-01' THEN 1 WHEN 'BODY-01' THEN 2 WHEN 'STRESS-01' THEN 3 ELSE 99 END`;
 
+const TB_BASE_URL = process.env.TB_BASE_URL || 'http://localhost:8080';
+
+// Pieza 1: empuja los datos del paciente activo (altura, edad, sexo) hacia el
+// device en ThingsBoard como "shared attributes", para que el modulo (ESP32)
+// los reciba automaticamente y pueda calcular, por ejemplo, el % de grasa.
+// Reutiliza el token del admin logueado: ThingsBoard aplica sus propios permisos.
+// Es "best-effort": si falla, la seleccion del paciente igual se guarda.
+async function syncPatientAttributes(stationCode, token) {
+    try {
+        if (!token) return;
+        const info = await query(`
+            SELECT s.thingsboard_device_id AS device_id, a.patient_id,
+                   p.age, p.sex, p.height_cm
+            FROM station_active_patient a
+            JOIN stations s ON s.id = a.station_id
+            LEFT JOIN patients p ON p.id = a.patient_id
+            WHERE s.station_code = $1
+        `, [stationCode]);
+        const row = info.rows[0];
+        if (!row || !row.device_id) return;
+
+        const url = `${TB_BASE_URL}/api/plugins/telemetry/DEVICE/${row.device_id}/SHARED_SCOPE`;
+        const headers = {
+            'X-Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+
+        if (!row.patient_id) {
+            // Ningun paciente activo: limpia los atributos para no dejar datos viejos.
+            await fetch(`${url}?keys=height,age,sex`, { method: 'DELETE', headers });
+            return;
+        }
+
+        const payload = {};
+        if (row.height_cm != null) payload.height = Number(row.height_cm);
+        if (row.age != null) payload.age = Number(row.age);
+        if (row.sex != null) payload.sex = row.sex;
+        if (Object.keys(payload).length) {
+            await fetch(url, { method: 'POST', headers, body: JSON.stringify(payload) });
+        }
+    } catch (err) {
+        console.error('No se pudo sincronizar atributos del paciente con ThingsBoard:', err);
+    }
+}
+
 export default async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store');
     if (!await requireAdmin(req, res)) return;
@@ -39,6 +84,11 @@ export default async function handler(req, res) {
                           a.selected_at
             `, [stationCode, patientCode]);
             if (!result.rows.length) return res.status(404).json({ error: 'Estación o paciente no encontrado' });
+
+            // Empuja altura/edad/sexo del paciente activo al modulo via ThingsBoard.
+            const tbToken = String(req.headers.authorization || '').replace(/^Bearer\s+/i, '');
+            await syncPatientAttributes(stationCode, tbToken);
+
             return res.status(200).json(result.rows[0]);
         }
 

@@ -509,6 +509,32 @@
         setClinicalMessage('');
     }
 
+    // Pieza 2: etiquetas y unidades de cada metrica que envia el modulo de body.
+    // Nombres de clave reales del modulo (confirmar los ambiguos con el equipo).
+    const METRIC_LABELS = {
+        peso: ['Peso', 'kg'], gp: ['Grasa', '%'], gk: ['Grasa', 'kg'],
+        ffm: ['Masa magra', 'kg'], tbw: ['Agua total', 'L'], tp: ['Agua', '%'],
+        mus: ['Músculo', 'kg'], mme: ['Masa músc.', 'kg'], hue: ['Hueso', 'kg'],
+        pro: ['Proteína', 'kg'], imc: ['IMC', ''], bmr: ['Metab.', 'kcal'],
+        R: ['R', 'Ω'], X: ['X', 'Ω'], F: ['Fase', '°']
+    };
+    // Claves que no se muestran como metrica (control o duplicados).
+    const HIDDEN_METRIC_KEYS = new Set(['value', 'id', 'persona_ok']);
+
+    function metricsHtml(measurement) {
+        const metrics = measurement.metrics;
+        if (!metrics || typeof metrics !== 'object') return '';
+        const keys = Object.keys(metrics).filter((k) => !HIDDEN_METRIC_KEYS.has(k) && metrics[k] != null);
+        if (keys.length < 2) return '';
+        const chips = keys.map((k) => {
+            const [label, unit] = METRIC_LABELS[k] || [k, ''];
+            const raw = metrics[k];
+            const val = typeof raw === 'number' ? Number(raw).toFixed(1) : raw;
+            return `<span class="metric-chip">${label}: <strong>${val}</strong>${unit ? ' ' + unit : ''}</span>`;
+        }).join('');
+        return `<div class="metric-chips">${chips}</div>`;
+    }
+
     async function refreshMeasurements() {
         const body = document.getElementById('measurementsBody');
         const patientView = state.authority === 'PATIENT';
@@ -543,11 +569,13 @@
                 const headers = patientView
                     ? '<th>Valor</th><th>Fecha</th>'
                     : '<th>Paciente</th><th>Valor</th><th>Fecha</th>';
-                const tableRows = rows.map((m) => patientView ? `
-                    <tr><td><strong>${Number(m.value).toFixed(2)}</strong> ${m.unit || ''}</td><td>${new Date(m.measured_at).toLocaleString('es-CR')}</td></tr>
-                ` : `
-                    <tr><td>${m.patient_code}${m.patient_name ? `<small>${m.patient_name}</small>` : ''}</td><td><strong>${Number(m.value).toFixed(2)}</strong> ${m.unit || ''}</td><td>${new Date(m.measured_at).toLocaleString('es-CR')}</td></tr>
-                `).join('');
+                const tableRows = rows.map((m) => {
+                    const dateStr = new Date(m.measured_at).toLocaleString('es-CR');
+                    const valueCell = `<strong>${Number(m.value).toFixed(2)}</strong> ${m.unit || ''}${metricsHtml(m)}`;
+                    return patientView
+                        ? `<tr><td>${valueCell}</td><td>${dateStr}</td></tr>`
+                        : `<tr><td>${m.patient_code}${m.patient_name ? `<small>${m.patient_name}</small>` : ''}</td><td>${valueCell}</td><td>${dateStr}</td></tr>`;
+                }).join('');
                 return `
                     <details class="station-accordion" data-station="${stationCode}" ${open ? 'open' : ''}>
                         <summary>
@@ -573,7 +601,6 @@
             document.getElementById('profileAge').value = profile.age || '';
             document.getElementById('profileSex').value = profile.sex || '';
             document.getElementById('profileHeight').value = profile.height_cm || '';
-            document.getElementById('profileWeight').value = profile.weight_kg || '';
         } catch (error) {
             setClinicalMessage(error.message, true);
         }
@@ -590,8 +617,7 @@
                     lastName: document.getElementById('profileLastName').value,
                     age: Number(document.getElementById('profileAge').value),
                     sex: document.getElementById('profileSex').value,
-                    heightCm: Number(document.getElementById('profileHeight').value),
-                    weightKg: Number(document.getElementById('profileWeight').value)
+                    heightCm: Number(document.getElementById('profileHeight').value)
                 })
             });
             setClinicalMessage('Información personal guardada.');
