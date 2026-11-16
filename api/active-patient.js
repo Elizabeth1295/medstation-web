@@ -6,6 +6,15 @@ const stationOrder = `CASE s.station_code
 
 const TB_BASE_URL = process.env.TB_BASE_URL || 'http://localhost:8080';
 
+// Condiciones previas (si/no) del cuestionario de rutina que tambien se empujan
+// al modulo, mas el puntaje PSS-10. Deben coincidir con api/patient-profile.js.
+const CONDITION_KEYS = [
+    'low_sleep', 'caffeine', 'nic_alcohol', 'exercise',
+    'heart_meds', 'cardiac_skin', 'ate_bathed', 'temp_discomfort'
+];
+// Todas las claves de atributos que el server administra para el modulo.
+const SHARED_KEYS = ['height', 'age', 'sex', ...CONDITION_KEYS, 'pss_score'];
+
 // Pieza 1: empuja los datos del paciente activo (altura, edad, sexo) hacia el
 // device en ThingsBoard como "shared attributes", para que el modulo (ESP32)
 // los reciba automaticamente y pueda calcular, por ejemplo, el % de grasa.
@@ -16,7 +25,7 @@ async function syncPatientAttributes(stationCode, token) {
         if (!token) return;
         const info = await query(`
             SELECT s.thingsboard_device_id AS device_id, a.patient_id,
-                   p.age, p.sex, p.height_cm
+                   p.age, p.sex, p.height_cm, p.screening
             FROM station_active_patient a
             JOIN stations s ON s.id = a.station_id
             LEFT JOIN patients p ON p.id = a.patient_id
@@ -33,7 +42,7 @@ async function syncPatientAttributes(stationCode, token) {
 
         if (!row.patient_id) {
             // Ningun paciente activo: limpia los atributos para no dejar datos viejos.
-            await fetch(`${url}?keys=height,age,sex`, { method: 'DELETE', headers });
+            await fetch(`${url}?keys=${SHARED_KEYS.join(',')}`, { method: 'DELETE', headers });
             return;
         }
 
@@ -41,6 +50,15 @@ async function syncPatientAttributes(stationCode, token) {
         if (row.height_cm != null) payload.height = Number(row.height_cm);
         if (row.age != null) payload.age = Number(row.age);
         if (row.sex != null) payload.sex = row.sex;
+
+        // Cuestionario de rutina: condiciones previas (si/no) + puntaje PSS-10.
+        const screening = row.screening || {};
+        const conditions = screening.conditions || {};
+        for (const key of CONDITION_KEYS) {
+            if (key in conditions) payload[key] = Boolean(conditions[key]);
+        }
+        if (screening.pss_score != null) payload.pss_score = Number(screening.pss_score);
+
         if (Object.keys(payload).length) {
             await fetch(url, { method: 'POST', headers, body: JSON.stringify(payload) });
         }

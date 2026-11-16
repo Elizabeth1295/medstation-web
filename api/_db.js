@@ -32,6 +32,9 @@ export function ensureSchema() {
             ALTER TABLE patients ADD COLUMN IF NOT EXISTS sex CHAR(1);
             ALTER TABLE patients ADD COLUMN IF NOT EXISTS height_cm NUMERIC(5,2);
             ALTER TABLE patients ADD COLUMN IF NOT EXISTS weight_kg NUMERIC(6,2);
+            -- Cuestionario de rutina del paciente: 8 condiciones previas (si/no) +
+            -- escala PSS-10 (0-4 con items invertidos) + puntaje total calculado.
+            ALTER TABLE patients ADD COLUMN IF NOT EXISTS screening JSONB;
             CREATE UNIQUE INDEX IF NOT EXISTS patients_email_unique
                 ON patients (LOWER(email)) WHERE email IS NOT NULL;
             CREATE UNIQUE INDEX IF NOT EXISTS patients_username_unique

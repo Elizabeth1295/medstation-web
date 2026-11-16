@@ -338,18 +338,34 @@ select:focus-visible,
 .metric-chip { font-size: 0.72rem; color: var(--color-text-secondary); background: var(--color-primary-light); border-radius: 8px; padding: 2px 8px; white-space: nowrap; }
 .metric-chip strong { color: var(--color-primary); }
 .station-accordion .measurements-table-wrap { margin: 0; max-height: 300px; border: 0; border-radius: 0; }
-.patient-dashboard { display: grid; grid-template-columns: minmax(220px, 0.65fr) 2fr; gap: 20px; margin: 8px 0 22px; }
+.patient-dashboard { display: grid; grid-template-columns: minmax(180px, 0.55fr) 2fr; gap: 20px; margin: 8px 0 22px; align-items: start; }
 .patient-dashboard[hidden] { display: none; }
-.patient-number-card { background: linear-gradient(145deg, #0066cc, #004d99); color: white; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; justify-content: center; min-height: 190px; }
-.patient-number-card span { font-size: 0.8rem; opacity: 0.8; }
-.patient-number-card strong { font-size: clamp(1.5rem, 3vw, 2.4rem); margin: 8px 0; overflow-wrap: anywhere; }
-.patient-number-card small { opacity: 0.85; }
-.patient-number-card small + small { margin-top: 4px; overflow-wrap: anywhere; }
+.patient-number-card { background: linear-gradient(145deg, #0066cc, #004d99); color: white; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; justify-content: center; box-sizing: border-box; overflow: hidden; height: 175px; }
+.patient-number-card span { font-size: 0.78rem; opacity: 0.8; }
+.patient-number-card strong { font-size: clamp(1.4rem, 2.8vw, 2rem); margin: 8px 0; overflow-wrap: anywhere; }
+.patient-number-card small { font-size: 0.8rem; opacity: 0.85; overflow-wrap: anywhere; }
+.patient-number-card small + small { margin-top: 3px; }
 .profile-form { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 10px; }
 .profile-form h3 { grid-column: 1 / -1; font-size: 1rem; color: var(--color-text-secondary); }
 .profile-field { display: flex; flex-direction: column; gap: 6px; }
 .profile-field > span { font-size: 0.78rem; font-weight: 700; color: var(--color-text-secondary); }
 .profile-save { grid-column: 1 / -1; padding: 11px; }
+
+/* Cuestionario de rutina del paciente (condiciones si/no + PSS-10). */
+#screeningFields { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 8px; }
+#screeningFields h3 { margin: 10px 0 2px; font-size: 1rem; color: var(--color-text-secondary); }
+.screening-help { margin: 0 0 4px; font-size: 0.8rem; color: var(--color-text-secondary); }
+.screening-row { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 8px 10px; border: 1px solid var(--color-border, #2a2f3a); border-radius: 8px; }
+.screening-q { font-size: 0.86rem; flex: 1; }
+.screening-yn { display: flex; gap: 14px; flex-shrink: 0; }
+.screening-yn label { display: flex; align-items: center; gap: 5px; font-size: 0.86rem; font-weight: 700; cursor: pointer; }
+.screening-pss { width: auto; min-width: 190px; flex-shrink: 0; padding: 7px 9px; }
+.screening-score { grid-column: 1 / -1; margin: 4px 0 0; font-weight: 700; color: var(--color-text-secondary); }
+@media (max-width: 640px) {
+    .screening-row { flex-direction: column; align-items: stretch; gap: 8px; }
+    .screening-pss { width: 100%; min-width: 0; }
+}
 
 .chart-card, .history-card {
     background: var(--color-surface);

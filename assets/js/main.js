@@ -593,6 +593,91 @@
         }
     }
 
+    // --- Cuestionario de rutina del paciente ---------------------------------
+    // 8 condiciones previas (si/no). La clave debe coincidir con el backend.
+    const SCREENING_CONDITIONS = [
+        ['low_sleep', '¿Durmió menos de 6 horas anoche?'],
+        ['caffeine', '¿Consumió cafeína en las últimas 3 horas?'],
+        ['nic_alcohol', '¿Consumió nicotina o alcohol en las últimas 3 horas?'],
+        ['exercise', '¿Hizo ejercicio intenso en las últimas 2 horas?'],
+        ['heart_meds', '¿Toma medicación que afecte el corazón o la sudoración?'],
+        ['cardiac_skin', '¿Tiene una condición cardiaca o de la piel diagnosticada?'],
+        ['ate_bathed', '¿Comió o se bañó en la última hora?'],
+        ['temp_discomfort', '¿Siente que la temperatura del lugar es incómoda?']
+    ];
+    // PSS-10: [clave, texto, invertida]. Las invertidas puntúan (4 - respuesta).
+    const PSS_ITEMS = [
+        ['q1', '¿Se ha sentido afectado/a por algo que ocurrió inesperadamente?', false],
+        ['q2', '¿Ha sentido que no podía controlar las cosas importantes de su vida?', false],
+        ['q3', '¿Se ha sentido nervioso/a o estresado/a?', false],
+        ['q4', '¿Ha confiado en su capacidad para manejar sus problemas personales?', true],
+        ['q5', '¿Ha sentido que las cosas le van bien?', true],
+        ['q6', '¿Ha sentido que no podía afrontar todas las cosas que tenía que hacer?', false],
+        ['q7', '¿Ha podido controlar las dificultades o fastidios de su vida?', true],
+        ['q8', '¿Ha sentido que tenía todo bajo control?', true],
+        ['q9', '¿Se ha enfadado por cosas que estaban fuera de su control?', false],
+        ['q10', '¿Ha sentido que las dificultades se acumulaban tanto que no podía superarlas?', false]
+    ];
+    const PSS_SCALE = ['0 · Nunca', '1 · Casi nunca', '2 · De vez en cuando', '3 · A menudo', '4 · Muy a menudo'];
+
+    function escapeHtml(text) {
+        return String(text).replace(/[&<>"]/g, (ch) =>
+            ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+    }
+
+    // Construye una sola vez el HTML del cuestionario dentro del formulario.
+    function buildScreeningUI() {
+        const host = document.getElementById('screeningFields');
+        if (!host || host.dataset.built) return;
+
+        const condRows = SCREENING_CONDITIONS.map(([key, text]) => `
+            <div class="screening-row">
+                <span class="screening-q">${escapeHtml(text)}</span>
+                <div class="screening-yn">
+                    <label><input type="radio" name="cond_${key}" value="1"> Sí</label>
+                    <label><input type="radio" name="cond_${key}" value="0"> No</label>
+                </div>
+            </div>`).join('');
+
+        const pssOptions = PSS_SCALE.map((lbl, i) => `<option value="${i}">${lbl}</option>`).join('');
+        const pssRows = PSS_ITEMS.map(([key, text]) => `
+            <div class="screening-row">
+                <span class="screening-q">${escapeHtml(text)}</span>
+                <select class="login-input screening-pss" name="pss_${key}">
+                    <option value="">—</option>${pssOptions}
+                </select>
+            </div>`).join('');
+
+        host.innerHTML = `
+            <h3>Cuestionario previo (Sí / No)</h3>
+            <p class="screening-help">Conteste antes de su medición de estrés.</p>
+            ${condRows}
+            <h3>Escala de Estrés Percibido (PSS-10)</h3>
+            <p class="screening-help">En el último mes, ¿con qué frecuencia…? (0 Nunca – 4 Muy a menudo)</p>
+            ${pssRows}
+            <p class="screening-score" id="pssScoreLine" aria-live="polite"></p>`;
+        host.dataset.built = '1';
+        host.addEventListener('change', updatePssScorePreview);
+    }
+
+    // Muestra el puntaje PSS-10 en vivo (mismo cálculo que el servidor).
+    function updatePssScorePreview() {
+        const line = document.getElementById('pssScoreLine');
+        if (!line) return;
+        let total = 0;
+        let answered = 0;
+        for (const [key, , reverse] of PSS_ITEMS) {
+            const el = document.querySelector(`[name="pss_${key}"]`);
+            if (!el || el.value === '') continue;
+            const value = Number(el.value);
+            answered += 1;
+            total += reverse ? 4 - value : value;
+        }
+        line.textContent = answered === PSS_ITEMS.length
+            ? `Puntaje PSS-10: ${total} / 40`
+            : `Puntaje PSS-10: responda las ${PSS_ITEMS.length} preguntas (${answered}/${PSS_ITEMS.length}).`;
+    }
+
     async function loadPatientProfile() {
         try {
             const profile = await clinicalFetch('/api/patient-profile');
@@ -601,9 +686,43 @@
             document.getElementById('profileAge').value = profile.age || '';
             document.getElementById('profileSex').value = profile.sex || '';
             document.getElementById('profileHeight').value = profile.height_cm || '';
+
+            buildScreeningUI();
+            const screening = profile.screening || {};
+            const conditions = screening.conditions || {};
+            for (const [key] of SCREENING_CONDITIONS) {
+                const value = conditions[key];
+                if (value === true || value === false) {
+                    const el = document.querySelector(`[name="cond_${key}"][value="${value ? '1' : '0'}"]`);
+                    if (el) el.checked = true;
+                }
+            }
+            const pss = screening.pss || {};
+            for (const [key] of PSS_ITEMS) {
+                if (key in pss) {
+                    const el = document.querySelector(`[name="pss_${key}"]`);
+                    if (el) el.value = String(pss[key]);
+                }
+            }
+            updatePssScorePreview();
         } catch (error) {
             setClinicalMessage(error.message, true);
         }
+    }
+
+    // Recolecta las respuestas del cuestionario desde el formulario.
+    function collectScreening() {
+        const conditions = {};
+        for (const [key] of SCREENING_CONDITIONS) {
+            const checked = document.querySelector(`[name="cond_${key}"]:checked`);
+            if (checked) conditions[key] = checked.value === '1';
+        }
+        const pss = {};
+        for (const [key] of PSS_ITEMS) {
+            const el = document.querySelector(`[name="pss_${key}"]`);
+            if (el && el.value !== '') pss[key] = Number(el.value);
+        }
+        return { conditions, pss };
     }
 
     async function savePatientProfile(event) {
@@ -617,7 +736,8 @@
                     lastName: document.getElementById('profileLastName').value,
                     age: Number(document.getElementById('profileAge').value),
                     sex: document.getElementById('profileSex').value,
-                    heightCm: Number(document.getElementById('profileHeight').value)
+                    heightCm: Number(document.getElementById('profileHeight').value),
+                    screening: collectScreening()
                 })
             });
             setClinicalMessage('Información personal guardada.');
