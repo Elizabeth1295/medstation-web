@@ -136,7 +136,11 @@ export default async function handler(req, res) {
                     { role: 'system', content: SYSTEM_PROMPT },
                     { role: 'user', content: summary }
                 ],
-                max_completion_tokens: 2000
+                // GPT-5 Nano es un modelo de razonamiento: gasta tokens "pensando"
+                // antes de responder. Con esfuerzo bajo y presupuesto amplio nos
+                // aseguramos de que quede espacio para el texto del diagnostico.
+                reasoning_effort: 'low',
+                max_completion_tokens: 3000
             })
         });
 
