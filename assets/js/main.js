@@ -535,9 +535,62 @@
         return `<div class="metric-chips">${chips}</div>`;
     }
 
+    // --- Diagnóstico asistido por IA -----------------------------------------
+    const DIAGNOSIS_HINT = 'Genere un análisis del historial del paciente con posibles anomalías y recomendaciones.';
+
+    // Muestra la tarjeta solo cuando hay un paciente seleccionado, y limpia el
+    // resultado si se cambió de paciente (para no mezclar diagnósticos).
+    function updateDiagnosisVisibility() {
+        const card = document.getElementById('diagnosisCard');
+        if (!card) return;
+        if (!state.selectedPatientCode) {
+            card.hidden = true;
+            card.dataset.patient = '';
+            return;
+        }
+        card.hidden = false;
+        if (card.dataset.patient !== state.selectedPatientCode) {
+            card.dataset.patient = state.selectedPatientCode;
+            const bodyEl = document.getElementById('diagnosisBody');
+            if (bodyEl) bodyEl.innerHTML = `<p class="diagnosis-hint">${DIAGNOSIS_HINT}</p>`;
+        }
+    }
+
+    // Da formato mínimo al texto de la IA: escapa HTML y resalta **negritas**.
+    // Los saltos de línea se respetan con CSS (white-space: pre-wrap).
+    function formatDiagnosis(text) {
+        return escapeHtml(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    }
+
+    async function generateDiagnosis() {
+        if (!state.selectedPatientCode) return;
+        const btn = document.getElementById('generateDiagnosisBtn');
+        const bodyEl = document.getElementById('diagnosisBody');
+        const prevLabel = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Generando…';
+        bodyEl.innerHTML = '<p class="diagnosis-hint">Analizando el historial con IA… esto puede tardar unos segundos.</p>';
+        try {
+            const result = await clinicalFetch('/api/diagnosis', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ patientCode: state.selectedPatientCode })
+            });
+            const when = result.generatedAt ? new Date(result.generatedAt).toLocaleString('es-CR') : '';
+            bodyEl.innerHTML = `<div class="diagnosis-text">${formatDiagnosis(result.diagnosis)}</div>
+                <p class="diagnosis-meta">Modelo: ${escapeHtml(result.model || 'IA')}${when ? ' · ' + when : ''}</p>`;
+        } catch (error) {
+            bodyEl.innerHTML = `<p class="diagnosis-error">${escapeHtml(error.message)}</p>`;
+        } finally {
+            btn.disabled = false;
+            btn.innerHTML = prevLabel;
+        }
+    }
+
     async function refreshMeasurements() {
         const body = document.getElementById('measurementsBody');
         const patientView = state.authority === 'PATIENT';
+        updateDiagnosisVisibility();
         if (!state.selectedPatientCode) {
             state.measurements = [];
             body.innerHTML = '<div class="history-empty">Seleccione un paciente para ver su historial.</div>';
@@ -904,6 +957,7 @@
         document.getElementById('logoutBtn').addEventListener('click', logout);
         document.getElementById('patientForm').addEventListener('submit', addPatient);
         document.getElementById('profileForm').addEventListener('submit', savePatientProfile);
+        document.getElementById('generateDiagnosisBtn').addEventListener('click', generateDiagnosis);
         document.getElementById('patientSelect').addEventListener('change', async function () {
             state.selectedPatientCode = this.value;
             await refreshMeasurements();

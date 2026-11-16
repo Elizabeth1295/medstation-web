@@ -110,6 +110,16 @@
                     <button class="btn-acceder profile-save" type="submit">Guardar información</button>
                 </form>
             </div>
+            <div class="diagnosis-card" id="diagnosisCard" hidden>
+                <div class="diagnosis-head">
+                    <span class="card-title"><i class="fas fa-user-md" aria-hidden="true"></i> Diagnóstico asistido (IA)</span>
+                    <button class="lang-toggle" id="generateDiagnosisBtn" type="button"><i class="fas fa-stethoscope" aria-hidden="true"></i> Generar diagnóstico</button>
+                </div>
+                <div class="diagnosis-body" id="diagnosisBody">
+                    <p class="diagnosis-hint">Genere un análisis del historial del paciente con posibles anomalías y recomendaciones.</p>
+                </div>
+                <p class="diagnosis-disclaimer"><i class="fas fa-triangle-exclamation" aria-hidden="true"></i> Análisis generado por IA con fines académicos. No sustituye la valoración de un profesional de salud.</p>
+            </div>
             <div class="station-accordions" id="measurementsBody">
                 <div class="history-empty">Seleccione un paciente para ver su historial.</div>
             </div>

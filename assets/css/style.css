@@ -367,6 +367,19 @@ select:focus-visible,
     .screening-pss { width: 100%; min-width: 0; }
 }
 
+/* Diagnóstico asistido por IA (debajo de los datos del paciente). */
+.diagnosis-card { border: 1px solid var(--color-border, #2a2f3a); border-radius: 14px;
+    padding: 16px 18px; margin: 0 0 20px; background: var(--color-surface-2, rgba(0, 102, 204, 0.04)); }
+.diagnosis-card[hidden] { display: none; }
+.diagnosis-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.diagnosis-body { margin-top: 12px; }
+.diagnosis-hint { margin: 0; font-size: 0.86rem; color: var(--color-text-secondary); }
+.diagnosis-text { white-space: pre-wrap; line-height: 1.5; font-size: 0.9rem; }
+.diagnosis-text strong { color: var(--color-text, inherit); }
+.diagnosis-meta { margin: 10px 0 0; font-size: 0.75rem; color: var(--color-text-secondary); }
+.diagnosis-error { margin: 0; color: #d33; font-size: 0.86rem; }
+.diagnosis-disclaimer { margin: 12px 0 0; font-size: 0.72rem; color: var(--color-text-secondary); opacity: 0.85; }
+
 .chart-card, .history-card {
     background: var(--color-surface);
     border-radius: var(--radius-card);
