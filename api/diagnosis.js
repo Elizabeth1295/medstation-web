@@ -15,20 +15,33 @@ Genera un diagnóstico BREVE y fácil de leer, con exactamente esta estructura:
 Estado de salud
 - Un veredicto claro en UNA línea, elegido según los resultados:
   "Saludable", "Saludable con observaciones" o "Requiere atención médica".
+- Si hay al menos un valor fuera de rango, NO uses solo "Saludable":
+  usa "Saludable con observaciones" (leve) o "Requiere atención médica" (grave).
 
 Resumen
 - 2 o 3 viñetas cortas sobre el estado general del paciente.
 
 Hallazgos
-- Viñetas de una línea con anomalías o valores fuera de rango.
-- Si no hay nada relevante, escribe solo: "Sin anomalías relevantes".
+- Clasifica el PESO según el IMC: bajo peso (<18.5), normal (18.5-24.9),
+  sobrepeso (25-29.9) u obesidad (>=30).
+- Clasifica la GRASA corporal (%) según el sexo del paciente:
+  Mujeres: baja <21, normal 21-32, alta >32.
+  Hombres: baja <8, normal 8-24, alta >24.
+- Evalúa la HIDRATACIÓN con el agua corporal (%):
+  sano aprox. Mujeres 50-55%, Hombres 55-60%. Por debajo = posible déficit de agua.
+- Una viñeta por hallazgo, de una línea. Omite lo que no tenga datos.
 
 Recomendaciones
+- Acciones concretas y prácticas según los hallazgos. Ejemplos de estilo:
+  "Tomar más agua durante el día", "Hacer más ejercicio cardiovascular",
+  "Aumentar la ingesta de proteína", "Reducir alimentos altos en grasa".
 - Máximo 3 viñetas, solo si hay hallazgos que lo ameriten.
 
 Reglas estrictas:
 - Español, directo y conciso. Frases cortas, sin relleno.
-- Basa el veredicto SOLO en los valores entregados; no inventes datos.
+- Basa todo SOLO en los valores entregados (peso, IMC, grasa %, agua, etc.);
+  no inventes datos. Usa el valor más reciente de cada métrica.
+- Si hay datos de otras estaciones (espirometría, estrés), inclúyelos también.
 - NO hagas preguntas ni ofrezcas ayuda adicional.
 - NO agregues "Notas finales", cierres conversacionales ni descargos
   (la interfaz ya muestra el descargo académico).`;
@@ -45,6 +58,26 @@ const CONDITION_LABELS = {
     temp_discomfort: 'Temperatura del lugar incómoda'
 };
 const IGNORED_METRIC_KEYS = new Set(['value', 'id', 'persona_ok']);
+
+// Etiquetas legibles de las métricas del módulo de body, para que el modelo
+// interprete bien cada valor (no ve claves crudas como gp/tbw/imc).
+const METRIC_LABELS = {
+    peso: 'Peso (kg)',
+    gp: 'Grasa corporal (%)',
+    gk: 'Grasa (kg)',
+    ffm: 'Masa magra (kg)',
+    tbw: 'Agua corporal total (L)',
+    tp: 'Agua corporal (%)',
+    mus: 'Músculo (kg)',
+    mme: 'Masa muscular esquelética (kg)',
+    hue: 'Hueso (kg)',
+    pro: 'Proteína (kg)',
+    imc: 'IMC',
+    bmr: 'Metabolismo basal (kcal)',
+    R: 'Resistencia (ohm)',
+    X: 'Reactancia (ohm)',
+    F: 'Ángulo de fase (°)'
+};
 
 // Construye un resumen de texto plano con el perfil y el historial del paciente,
 // que es lo que se envía al modelo como contexto.
@@ -81,7 +114,7 @@ function buildPatientSummary(patient, measurements) {
             if (m.metrics && typeof m.metrics === 'object') {
                 const extra = Object.entries(m.metrics)
                     .filter(([k, v]) => !IGNORED_METRIC_KEYS.has(k) && v != null)
-                    .map(([k, v]) => `${k}=${v}`)
+                    .map(([k, v]) => `${METRIC_LABELS[k] || k}=${v}`)
                     .join(', ');
                 if (extra) line += ` | ${extra}`;
             }
