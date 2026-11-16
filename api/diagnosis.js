@@ -12,6 +12,10 @@ composición corporal y análisis de estrés) junto con un cuestionario de rutin
 
 Genera un diagnóstico BREVE y fácil de leer, con exactamente esta estructura:
 
+Estado de salud
+- Un veredicto claro en UNA línea, elegido según los resultados:
+  "Saludable", "Saludable con observaciones" o "Requiere atención médica".
+
 Resumen
 - 2 o 3 viñetas cortas sobre el estado general del paciente.
 
@@ -24,7 +28,7 @@ Recomendaciones
 
 Reglas estrictas:
 - Español, directo y conciso. Frases cortas, sin relleno.
-- No inventes datos que no aparezcan en la información entregada.
+- Basa el veredicto SOLO en los valores entregados; no inventes datos.
 - NO hagas preguntas ni ofrezcas ayuda adicional.
 - NO agregues "Notas finales", cierres conversacionales ni descargos
   (la interfaz ya muestra el descargo académico).`;
