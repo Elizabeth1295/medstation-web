@@ -18,8 +18,9 @@ const TELEMETRY_KEY = 'value';
 const STATION_CODES = { spiro: 'SPIRO-01', body: 'BODY-01', stress: 'STRESS-01' };
 const UNITS = { spiro: 'L', body: '% grasa', stress: '% HRV' };
 // Metrica "principal" que se muestra en el tablero y en la columna Valor.
-// El modulo de body envia la grasa en 'value' (y tambien en 'gp').
-const PRIMARY_KEY = { spiro: 'value', body: 'value', stress: 'value' };
+// El modulo de body envia la grasa en 'value'; el de espiro NO envia 'value',
+// su medicion principal es la FVC (fvc_L).
+const PRIMARY_KEY = { spiro: 'fvc_L', body: 'value', stress: 'value' };
 
 // Claves de control que el modulo manda pero NO son mediciones clinicas.
 const IGNORED_KEYS = new Set(['id', 'persona_ok']);
