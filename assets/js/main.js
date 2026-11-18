@@ -512,24 +512,29 @@
     // Pieza 2: etiquetas y unidades de cada metrica que envia el modulo de body.
     // Nombres de clave reales del modulo (confirmar los ambiguos con el equipo).
     const METRIC_LABELS = {
+        // Body
         peso: ['Peso', 'kg'], gp: ['Grasa', '%'], gk: ['Grasa', 'kg'],
         ffm: ['Masa magra', 'kg'], tbw: ['Agua total', 'L'], tp: ['Agua', '%'],
         mus: ['Músculo', 'kg'], mme: ['Masa músc.', 'kg'], hue: ['Hueso', 'kg'],
         pro: ['Proteína', 'kg'], imc: ['IMC', ''], bmr: ['Metab.', 'kcal'],
-        R: ['R', 'Ω'], X: ['X', 'Ω'], F: ['Fase', '°']
+        R: ['R', 'Ω'], X: ['X', 'Ω'], F: ['Fase', '°'],
+        // Espirómetro
+        fvc_L: ['FVC', 'L'], fev1_L: ['FEV1', 'L'],
+        fev1_fvc_pct: ['FEV1/FVC', '%'], pef_Ls: ['PEF', 'L/s']
     };
-    // Claves que no se muestran como metrica (control o duplicados).
-    const HIDDEN_METRIC_KEYS = new Set(['value', 'id', 'persona_ok']);
 
     function metricsHtml(measurement) {
         const metrics = measurement.metrics;
         if (!metrics || typeof metrics !== 'object') return '';
-        const keys = Object.keys(metrics).filter((k) => !HIDDEN_METRIC_KEYS.has(k) && metrics[k] != null);
-        if (keys.length < 2) return '';
+        // Solo se muestran las metricas reconocidas (con etiqueta); asi se
+        // oculta el "ruido" del modulo (calidad, maniobra, grupo, aviso, etc.).
+        const keys = Object.keys(metrics).filter((k) => METRIC_LABELS[k] && metrics[k] != null);
+        if (!keys.length) return '';
         const chips = keys.map((k) => {
             const [label, unit] = METRIC_LABELS[k] || [k, ''];
             const raw = metrics[k];
-            const val = typeof raw === 'number' ? Number(raw).toFixed(1) : raw;
+            // Hasta 2 decimales, sin ceros de relleno (4.02, 3.61, 90, 8.5).
+            const val = typeof raw === 'number' ? String(Number(raw.toFixed(2))) : raw;
             return `<span class="metric-chip">${label}: <strong>${val}</strong>${unit ? ' ' + unit : ''}</span>`;
         }).join('');
         return `<div class="metric-chips">${chips}</div>`;
