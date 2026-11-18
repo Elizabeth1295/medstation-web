@@ -31,6 +31,13 @@ Hallazgos
   sano aprox. Mujeres 50-55%, Hombres 55-60%. Por debajo = posible déficit de agua.
 - Una viñeta por hallazgo, de una línea. Omite lo que no tenga datos.
 
+Espirometría (incluir esta sección SOLO si se entregó "Análisis de espirometría")
+- Lista cada parámetro (FVC, FEV1, FEV1/FVC, PEF) con: medido vs esperado,
+  % del esperado y si es Normal o está por debajo del LIN. Usa los valores
+  YA CALCULADOS que se te entregan; no los recalcules.
+- Interpretación global: patrón obstructivo (FEV1/FVC por debajo del LIN),
+  posible restrictivo (FVC baja con FEV1/FVC normal), o espirometría normal.
+
 Recomendaciones
 - Acciones concretas y prácticas según los hallazgos. Ejemplos de estilo:
   "Tomar más agua durante el día", "Hacer más ejercicio cardiovascular",
@@ -78,6 +85,65 @@ const METRIC_LABELS = {
     X: 'Reactancia (ohm)',
     F: 'Ángulo de fase (°)'
 };
+
+// --- Análisis de espirometría (ECSC/ERS 1993, Quanjer et al.) ----------------
+// Valor esperado = a·Estatura(m) + b·Edad(años) + c
+// LIN (límite inferior normal) = Esperado − 1,64·RSD.  Entre 18 y 25 años se usa 25.
+// Solo es anormal estar POR DEBAJO del LIN. Claves del modulo: fvc_L, fev1_L,
+// fev1_fvc_pct, pef_Ls.
+const SPIRO_REF = {
+    M: {
+        FVC: { a: 5.76, b: -0.026, c: -4.34, rsd: 0.61, unit: 'L', key: 'fvc_L' },
+        FEV1: { a: 4.3, b: -0.029, c: -2.49, rsd: 0.51, unit: 'L', key: 'fev1_L' },
+        'FEV1/FVC': { a: 0, b: -0.18, c: 87.21, rsd: 7.17, unit: '%', key: 'fev1_fvc_pct' },
+        PEF: { a: 6.14, b: -0.043, c: 0.15, rsd: 1.21, unit: 'L/s', key: 'pef_Ls' }
+    },
+    F: {
+        FVC: { a: 4.43, b: -0.026, c: -2.89, rsd: 0.43, unit: 'L', key: 'fvc_L' },
+        FEV1: { a: 3.95, b: -0.025, c: -2.6, rsd: 0.38, unit: 'L', key: 'fev1_L' },
+        'FEV1/FVC': { a: 0, b: -0.19, c: 89.1, rsd: 6.51, unit: '%', key: 'fev1_fvc_pct' },
+        PEF: { a: 5.5, b: -0.03, c: -1.11, rsd: 0.9, unit: 'L/s', key: 'pef_Ls' }
+    }
+};
+const SPIRO_PARAMS = ['FVC', 'FEV1', 'FEV1/FVC', 'PEF'];
+const SPIRO_KEYS = ['fvc_L', 'fev1_L', 'fev1_fvc_pct', 'pef_Ls'];
+
+// Calcula la tabla Esperado/LIN/%/¿Normal? a partir de la medición de espiro
+// más reciente que tenga los parámetros. Devuelve null si no hay datos usables.
+function buildSpirometryTable(patient, measurements) {
+    const sex = String(patient.sex || '').toUpperCase();
+    const ref = SPIRO_REF[sex];
+    const heightM = Number(patient.height_cm) / 100;
+    let age = Number(patient.age);
+    if (!ref || !Number.isFinite(heightM) || heightM <= 0 || !Number.isFinite(age)) return null;
+    if (age < 25) age = 25;
+
+    const spiro = measurements.find((m) =>
+        m.station_code === 'SPIRO-01' && m.metrics &&
+        SPIRO_KEYS.some((k) => m.metrics[k] != null));
+    if (!spiro) return null;
+    const metrics = spiro.metrics;
+
+    const rows = [];
+    for (const param of SPIRO_PARAMS) {
+        const r = ref[param];
+        const medido = Number(metrics[r.key]);
+        if (!Number.isFinite(medido)) continue;
+        const esperado = r.a * heightM + r.b * age + r.c;
+        const lin = esperado - 1.64 * r.rsd;
+        const pct = (medido / esperado) * 100;
+        const normal = medido >= lin ? 'Sí' : 'No (por debajo del LIN)';
+        rows.push(`${param} (${r.unit}) | medido=${medido.toFixed(2)} | esperado=${esperado.toFixed(2)} | LIN=${lin.toFixed(2)} | ${pct.toFixed(0)}% del esperado | Normal: ${normal}`);
+    }
+    if (!rows.length) return null;
+
+    return [
+        'Análisis de espirometría (ecuaciones ECSC/ERS 1993, Quanjer et al.):',
+        `Datos usados: sexo ${sex}, edad ${age} años (18-25 se evalúa como 25), estatura ${heightM.toFixed(2)} m.`,
+        ...rows,
+        'Regla de interpretación: un parámetro solo es anormal si está POR DEBAJO de su LIN.'
+    ].join('\n');
+}
 
 // Construye un resumen de texto plano con el perfil y el historial del paciente,
 // que es lo que se envía al modelo como contexto.
@@ -166,7 +232,9 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'El paciente aún no tiene mediciones para analizar.' });
         }
 
-        const summary = buildPatientSummary(patient, measurementsRes.rows);
+        const spiroTable = buildSpirometryTable(patient, measurementsRes.rows);
+        const summary = buildPatientSummary(patient, measurementsRes.rows) +
+            (spiroTable ? '\n\n' + spiroTable : '');
 
         const aiResponse = await fetch(`${OPENAI_BASE_URL}/chat/completions`, {
             method: 'POST',
