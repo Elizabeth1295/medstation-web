@@ -59,7 +59,14 @@ async function syncPatientAttributes(stationCode, token) {
         }
         if (screening.pss_score != null) payload.pss_score = Number(screening.pss_score);
 
-        if (Object.keys(payload).length) {
+        // Limpia las claves que este paciente NO tiene (p. ej. un paciente sin
+        // perfil), para no dejar datos del paciente anterior pegados en el device.
+        const presentKeys = Object.keys(payload);
+        const staleKeys = SHARED_KEYS.filter((k) => !presentKeys.includes(k));
+        if (staleKeys.length) {
+            await fetch(`${url}?keys=${staleKeys.join(',')}`, { method: 'DELETE', headers });
+        }
+        if (presentKeys.length) {
             await fetch(url, { method: 'POST', headers, body: JSON.stringify(payload) });
         }
     } catch (err) {
