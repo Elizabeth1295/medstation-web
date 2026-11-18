@@ -852,10 +852,10 @@
                     </span>
                 </div>
                 <div class="value-display">
-                    <span class="value-main" id="val_${key}">${mod.online ? displayVal : '—'}</span>
+                    <span class="value-main" id="val_${key}">${mod.current !== null ? displayVal : '—'}</span>
                     <span class="value-unit">${cfg.unit[state.lang]}</span>
                 </div>
-                <div class="value-meta">${state.lang === 'es' ? 'Última lectura' : 'Last reading'}: ${mod.online ? lastTime : '—'}</div>
+                <div class="value-meta">${state.lang === 'es' ? 'Última lectura' : 'Last reading'}: ${lastTime}</div>
                 <button class="btn-acceder" data-module="${key}" type="button"
                     aria-label="${t('access')}: ${cfg.label[state.lang]}">
                     ${t('access')}
