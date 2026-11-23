@@ -33,9 +33,12 @@ Qué poner en las viñetas de cada estación (no en el subtítulo):
   y el patrón (obstructivo, restrictivo o normal).
 - Estrés: banda PSS-10 (bajo/moderado/alto) y signos (frecuencia cardíaca, SpO2, etc.).
 
-"Recomendaciones": hasta 4 viñetas con acciones concretas (p. ej. "Tomar más
-agua", "Hacer más ejercicio cardiovascular", "Técnicas de relajación si el
-estrés es alto"), solo si hay hallazgos que lo ameriten.
+"Recomendaciones": SIEMPRE incluye esta sección con AL MENOS una viñeta (nunca
+la dejes vacía ni la omitas). De 1 a 4 viñetas con acciones concretas (p. ej.
+"Tomar más agua", "Hacer más ejercicio cardiovascular", "Técnicas de relajación
+si el estrés es alto"). Si no hay hallazgos relevantes, da igual una recomendación
+general de mantenimiento, por ejemplo "Mantener hábitos saludables: hidratación,
+ejercicio regular y buen descanso".
 
 Reglas estrictas:
 - Español, directo y conciso. Frases cortas, sin relleno.
