@@ -428,6 +428,7 @@
         await Promise.all(state.allowedModules.map((key) => refreshModule(key)));
         renderModules();
         updateFooterStatus();
+        if (state.authority !== 'PATIENT') await refreshPatientsIfChanged();
         if (state.selectedPatientCode) await refreshMeasurements();
     }
 
@@ -452,27 +453,48 @@
         el.classList.toggle('is-error', isError);
     }
 
+    // Rellena el <select> de pacientes conservando la selección actual.
+    function renderPatientSelect() {
+        const select = document.getElementById('patientSelect');
+        select.innerHTML = '<option value="">Seleccione un paciente</option>' + state.patients.map((p) => {
+            const displayName = [p.first_name, p.last_name].filter(Boolean).join(' ') || p.name || p.username || '';
+            return `<option value="${p.patient_code}">${p.patient_code}${displayName ? ` · ${displayName}` : ''}</option>`;
+        }).join('');
+        if (state.authority === 'PATIENT' && state.patients[0]) {
+            state.selectedPatientCode = state.patients[0].patient_code;
+        }
+        if (state.patients.some((p) => p.patient_code === state.selectedPatientCode)) {
+            select.value = state.selectedPatientCode;
+        } else {
+            state.selectedPatientCode = '';
+        }
+    }
+
     async function refreshPatients() {
         try {
             state.patients = await clinicalFetch('/api/patients');
-            const select = document.getElementById('patientSelect');
-            select.innerHTML = '<option value="">Seleccione un paciente</option>' + state.patients.map((p) => {
-                const displayName = [p.first_name, p.last_name].filter(Boolean).join(' ') || p.name || p.username || '';
-                return `<option value="${p.patient_code}">${p.patient_code}${displayName ? ` · ${displayName}` : ''}</option>`;
-            }).join('');
-            if (state.authority === 'PATIENT' && state.patients[0]) {
-                state.selectedPatientCode = state.patients[0].patient_code;
-            }
-            if (state.patients.some((p) => p.patient_code === state.selectedPatientCode)) {
-                select.value = state.selectedPatientCode;
-            } else {
-                state.selectedPatientCode = '';
-            }
+            renderPatientSelect();
             await refreshMeasurements();
             if (state.authority !== 'PATIENT') await loadActivePatient();
         } catch (error) {
             console.error(error);
             setClinicalMessage(error.message, true);
+        }
+    }
+
+    // Refresco automático de la lista de pacientes (p. ej. uno registrado desde
+    // otro dispositivo). Solo re-renderiza si la lista realmente cambió, para no
+    // interrumpir al admin si está eligiendo en un desplegable.
+    async function refreshPatientsIfChanged() {
+        try {
+            const patients = await clinicalFetch('/api/patients');
+            const codes = (arr) => arr.map((p) => p.patient_code).sort().join(',');
+            if (codes(patients) === codes(state.patients || [])) return;
+            state.patients = patients;
+            renderPatientSelect();
+            if (state.authority !== 'PATIENT') await loadActivePatient();
+        } catch (error) {
+            console.error('No se pudo refrescar la lista de pacientes:', error);
         }
     }
 
