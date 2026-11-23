@@ -22,11 +22,16 @@ valor fuera de rango, no puede ser solo "Saludable".
 
 "Resumen": 2 o 3 viñetas cortas sobre el estado general del paciente.
 
-"Hallazgos": una viñeta por hallazgo, usando las clasificaciones YA DADAS en los
-bloques (no recalcules). Cubre, cuando haya datos: composición corporal (IMC,
-grasa, hidratación con su clasificación); espirometría (cada parámetro normal o
-por debajo del LIN y el patrón: obstructivo, restrictivo o normal); y estrés
-(banda PSS-10 y signos como frecuencia cardíaca y SpO2). Omite lo que no tenga datos.
+"Hallazgos por estación": SIEMPRE incluye las TRES estaciones, en este orden, cada
+una como un subtítulo con SOLO su nombre — "Composición corporal", "Espirometría"
+y "Estrés" — seguido de sus viñetas. Usa las clasificaciones YA DADAS en los
+bloques (no recalcules). Si una estación no tiene mediciones, pon una sola viñeta:
+"Sin mediciones recientes".
+Qué poner en las viñetas de cada estación (no en el subtítulo):
+- Composición corporal: IMC/peso, grasa e hidratación con su clasificación.
+- Espirometría: cada parámetro (FVC, FEV1, FEV1/FVC, PEF) normal o bajo el LIN,
+  y el patrón (obstructivo, restrictivo o normal).
+- Estrés: banda PSS-10 (bajo/moderado/alto) y signos (frecuencia cardíaca, SpO2, etc.).
 
 "Recomendaciones": hasta 4 viñetas con acciones concretas (p. ej. "Tomar más
 agua", "Hacer más ejercicio cardiovascular", "Técnicas de relajación si el
@@ -311,14 +316,17 @@ export default async function handler(req, res) {
         }
 
         // Bloques de análisis calculados en el servidor (deterministas): el
-        // modelo solo los reporta e interpreta, no recalcula.
-        const blocks = [
-            buildBodyAnalysis(patient, measurementsRes.rows),
-            buildSpirometryTable(patient, measurementsRes.rows),
-            buildStressAnalysis(patient, measurementsRes.rows)
-        ].filter(Boolean);
-        const summary = buildPatientSummary(patient, measurementsRes.rows) +
-            (blocks.length ? '\n\n' + blocks.join('\n\n') : '');
+        // modelo solo los reporta e interpreta, no recalcula. SIEMPRE se incluyen
+        // las tres estaciones; si una no tiene datos, se indica explícitamente.
+        const rows = measurementsRes.rows;
+        const bodyBlock = buildBodyAnalysis(patient, rows) ||
+            'Análisis de composición corporal: sin mediciones recientes en esta estación.';
+        const spiroBlock = buildSpirometryTable(patient, rows) ||
+            'Análisis de espirometría: sin mediciones recientes en esta estación.';
+        const stressBlock = buildStressAnalysis(patient, rows) ||
+            'Análisis de estrés: sin mediciones recientes ni PSS-10 registrado.';
+        const summary = buildPatientSummary(patient, rows) + '\n\n' +
+            [bodyBlock, spiroBlock, stressBlock].join('\n\n');
 
         const aiResponse = await fetch(`${OPENAI_BASE_URL}/chat/completions`, {
             method: 'POST',
