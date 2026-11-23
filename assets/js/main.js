@@ -542,7 +542,10 @@
         R: ['R', 'Ω'], X: ['X', 'Ω'], F: ['Fase', '°'],
         // Espirómetro
         fvc_L: ['FVC', 'L'], fev1_L: ['FEV1', 'L'],
-        fev1_fvc_pct: ['FEV1/FVC', '%'], pef_Ls: ['PEF', 'L/s']
+        fev1_fvc_pct: ['FEV1/FVC', '%'], pef_Ls: ['PEF', 'L/s'],
+        // Estrés
+        fc: ['FC', 'lpm'], spo2: ['SpO2', '%'],
+        eda: ['EDA', ''], temp: ['Temp', '°C']
     };
 
     function metricsHtml(measurement) {
