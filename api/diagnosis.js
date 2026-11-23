@@ -7,48 +7,34 @@ const OPENAI_BASE_URL = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-5-nano';
 
 const SYSTEM_PROMPT = `Eres un asistente clínico de apoyo dentro de un sistema académico (MedStation).
-Recibes el perfil y el historial de mediciones de un paciente (espirometría,
-composición corporal y análisis de estrés) junto con un cuestionario de rutina.
+Recibes el perfil de un paciente y BLOQUES DE ANÁLISIS ya calculados por el
+sistema (composición corporal, espirometría y estrés), cada uno con su
+clasificación. Tu trabajo es reportar e interpretar esos bloques, NO recalcular.
 
-Genera un diagnóstico BREVE y fácil de leer, con exactamente esta estructura:
+Devuelve SOLO el diagnóstico redactado (NO repitas ni copies estas instrucciones).
+Escribe BREVE y fácil de leer, usando estas cuatro secciones con estos títulos
+exactos y nada más:
 
-Estado de salud
-- Un veredicto claro en UNA línea, elegido según los resultados:
-  "Saludable", "Saludable con observaciones" o "Requiere atención médica".
-- Si hay al menos un valor fuera de rango, NO uses solo "Saludable":
-  usa "Saludable con observaciones" (leve) o "Requiere atención médica" (grave).
+"Estado de salud": en la línea siguiente al título, UNA sola viñeta con el
+veredicto, que es una de estas tres frases exactas: "Saludable",
+"Saludable con observaciones" o "Requiere atención médica". Si hay al menos un
+valor fuera de rango, no puede ser solo "Saludable".
 
-Resumen
-- 2 o 3 viñetas cortas sobre el estado general del paciente.
+"Resumen": 2 o 3 viñetas cortas sobre el estado general del paciente.
 
-Hallazgos
-- Clasifica el PESO según el IMC: bajo peso (<18.5), normal (18.5-24.9),
-  sobrepeso (25-29.9) u obesidad (>=30).
-- Clasifica la GRASA corporal (%) según el sexo del paciente:
-  Mujeres: baja <21, normal 21-32, alta >32.
-  Hombres: baja <8, normal 8-24, alta >24.
-- Evalúa la HIDRATACIÓN con el agua corporal (%):
-  sano aprox. Mujeres 50-55%, Hombres 55-60%. Por debajo = posible déficit de agua.
-- Una viñeta por hallazgo, de una línea. Omite lo que no tenga datos.
+"Hallazgos": una viñeta por hallazgo, usando las clasificaciones YA DADAS en los
+bloques (no recalcules). Cubre, cuando haya datos: composición corporal (IMC,
+grasa, hidratación con su clasificación); espirometría (cada parámetro normal o
+por debajo del LIN y el patrón: obstructivo, restrictivo o normal); y estrés
+(banda PSS-10 y signos como frecuencia cardíaca y SpO2). Omite lo que no tenga datos.
 
-Espirometría (incluir esta sección SOLO si se entregó "Análisis de espirometría")
-- Lista cada parámetro (FVC, FEV1, FEV1/FVC, PEF) con: medido vs esperado,
-  % del esperado y si es Normal o está por debajo del LIN. Usa los valores
-  YA CALCULADOS que se te entregan; no los recalcules.
-- Interpretación global: patrón obstructivo (FEV1/FVC por debajo del LIN),
-  posible restrictivo (FVC baja con FEV1/FVC normal), o espirometría normal.
-
-Recomendaciones
-- Acciones concretas y prácticas según los hallazgos. Ejemplos de estilo:
-  "Tomar más agua durante el día", "Hacer más ejercicio cardiovascular",
-  "Aumentar la ingesta de proteína", "Reducir alimentos altos en grasa".
-- Máximo 3 viñetas, solo si hay hallazgos que lo ameriten.
+"Recomendaciones": hasta 4 viñetas con acciones concretas (p. ej. "Tomar más
+agua", "Hacer más ejercicio cardiovascular", "Técnicas de relajación si el
+estrés es alto"), solo si hay hallazgos que lo ameriten.
 
 Reglas estrictas:
 - Español, directo y conciso. Frases cortas, sin relleno.
-- Basa todo SOLO en los valores entregados (peso, IMC, grasa %, agua, etc.);
-  no inventes datos. Usa el valor más reciente de cada métrica.
-- Si hay datos de otras estaciones (espirometría, estrés), inclúyelos también.
+- Usa SOLO los datos y clasificaciones entregados; no inventes.
 - NO hagas preguntas ni ofrezcas ayuda adicional.
 - NO agregues "Notas finales", cierres conversacionales ni descargos
   (la interfaz ya muestra el descargo académico).`;
@@ -83,7 +69,17 @@ const METRIC_LABELS = {
     bmr: 'Metabolismo basal (kcal)',
     R: 'Resistencia (ohm)',
     X: 'Reactancia (ohm)',
-    F: 'Ángulo de fase (°)'
+    F: 'Ángulo de fase (°)',
+    // Espirómetro
+    fvc_L: 'FVC (L)',
+    fev1_L: 'FEV1 (L)',
+    fev1_fvc_pct: 'FEV1/FVC (%)',
+    pef_Ls: 'PEF (L/s)',
+    // Estrés
+    fc: 'Frecuencia cardíaca (lpm)',
+    spo2: 'SpO2 (%)',
+    temp: 'Temperatura de piel (°C)',
+    eda: 'EDA (actividad electrodérmica)'
 };
 
 // --- Análisis de espirometría (ECSC/ERS 1993, Quanjer et al.) ----------------
@@ -145,8 +141,93 @@ function buildSpirometryTable(patient, measurements) {
     ].join('\n');
 }
 
-// Construye un resumen de texto plano con el perfil y el historial del paciente,
-// que es lo que se envía al modelo como contexto.
+// --- Análisis de composición corporal (clasificación en el servidor) ---------
+function classifyIMC(imc) {
+    if (imc < 18.5) return 'bajo peso';
+    if (imc < 25) return 'normal';
+    if (imc < 30) return 'sobrepeso';
+    return 'obesidad';
+}
+function classifyFat(gp, sex) {
+    if (sex === 'F') return gp < 21 ? 'baja' : (gp <= 32 ? 'normal' : 'alta');
+    if (sex === 'M') return gp < 8 ? 'baja' : (gp <= 24 ? 'normal' : 'alta');
+    return 'sin referencia por sexo';
+}
+function classifyHydration(tp, sex) {
+    if (sex === 'F') return tp < 50 ? 'déficit de agua' : (tp <= 55 ? 'normal' : 'alta');
+    if (sex === 'M') return tp < 55 ? 'déficit de agua' : (tp <= 60 ? 'normal' : 'alta');
+    return 'sin referencia por sexo';
+}
+
+function buildBodyAnalysis(patient, measurements) {
+    const m = measurements.find((x) => x.station_code === 'BODY-01' && x.metrics);
+    if (!m) return null;
+    const sex = String(patient.sex || '').toUpperCase();
+    const met = m.metrics;
+    const lines = [];
+
+    let imc = Number(met.imc);
+    if (!Number.isFinite(imc)) {
+        const peso = Number(met.peso);
+        const hM = Number(patient.height_cm) / 100;
+        if (Number.isFinite(peso) && hM > 0) imc = peso / (hM * hM);
+    }
+    if (Number.isFinite(imc)) lines.push(`- Peso: IMC ${imc.toFixed(1)} => ${classifyIMC(imc)}.`);
+
+    const gp = Number(met.gp);
+    if (Number.isFinite(gp)) lines.push(`- Grasa corporal: ${gp.toFixed(1)}% => ${classifyFat(gp, sex)} (sexo ${sex || 'N/D'}).`);
+
+    const tp = Number(met.tp);
+    if (Number.isFinite(tp)) lines.push(`- Hidratación: agua ${tp.toFixed(1)}% => ${classifyHydration(tp, sex)} (sexo ${sex || 'N/D'}).`);
+
+    if (!lines.length) return null;
+    return ['Análisis de composición corporal (clasificación del sistema):', ...lines].join('\n');
+}
+
+// --- Análisis de estrés (PSS-10 + signos del módulo) -------------------------
+function classifyPSS(score) {
+    if (score <= 13) return 'estrés percibido bajo';
+    if (score <= 26) return 'estrés percibido moderado';
+    return 'estrés percibido alto';
+}
+function classifyFC(fc) {
+    if (fc < 60) return 'bradicardia (baja)';
+    if (fc <= 100) return 'normal';
+    return 'taquicardia (alta)';
+}
+function classifySpo2(s) {
+    if (s >= 95) return 'normal';
+    if (s >= 90) return 'levemente baja';
+    return 'baja';
+}
+
+function buildStressAnalysis(patient, measurements) {
+    const lines = [];
+
+    const pss = patient.screening?.pss_score;
+    if (pss != null && Number.isFinite(Number(pss))) {
+        lines.push(`- PSS-10 (estrés percibido): ${pss}/40 => ${classifyPSS(Number(pss))}.`);
+    }
+
+    const m = measurements.find((x) => x.station_code === 'STRESS-01' && x.metrics);
+    if (m) {
+        const met = m.metrics;
+        const fc = Number(met.fc);
+        if (Number.isFinite(fc)) lines.push(`- Frecuencia cardíaca: ${fc.toFixed(0)} lpm => ${classifyFC(fc)}.`);
+        const spo2 = Number(met.spo2);
+        if (Number.isFinite(spo2)) lines.push(`- SpO2: ${spo2.toFixed(1)}% => ${classifySpo2(spo2)}.`);
+        const temp = Number(met.temp);
+        if (Number.isFinite(temp)) lines.push(`- Temperatura de piel: ${temp.toFixed(1)} °C.`);
+        const eda = Number(met.eda);
+        if (Number.isFinite(eda)) lines.push(`- EDA: ${eda} (mayor valor = mayor activación/estrés).`);
+    }
+
+    if (!lines.length) return null;
+    return ['Análisis de estrés:', ...lines].join('\n');
+}
+
+// Construye un resumen de texto plano con el perfil y la ÚLTIMA medición limpia
+// de cada estación (sin ruido ni duplicados), que se envía al modelo.
 function buildPatientSummary(patient, measurements) {
     const lines = [];
     const name = [patient.first_name, patient.last_name].filter(Boolean).join(' ') || patient.patient_code;
@@ -166,26 +247,23 @@ function buildPatientSummary(patient, measurements) {
     }
 
     lines.push('');
-    lines.push('Historial de mediciones (más recientes primero):');
-    const byStation = new Map();
+    lines.push('Última medición de cada estación (solo métricas reconocidas):');
+    // measurements viene ordenado por fecha DESC, así que la primera de cada
+    // estación es la más reciente. Se ignora el "ruido" (claves sin etiqueta).
+    const latestByStation = new Map();
     for (const m of measurements) {
-        if (!byStation.has(m.station_name)) byStation.set(m.station_name, []);
-        byStation.get(m.station_name).push(m);
+        if (!latestByStation.has(m.station_code)) latestByStation.set(m.station_code, m);
     }
-    for (const [station, rows] of byStation) {
-        lines.push(`\n[${station}] (${rows.length} registros)`);
-        for (const m of rows.slice(0, 15)) {
-            const date = new Date(m.measured_at).toISOString().slice(0, 16).replace('T', ' ');
-            let line = `  - ${date}: valor=${m.value}${m.unit ? ' ' + m.unit : ''}`;
-            if (m.metrics && typeof m.metrics === 'object') {
-                const extra = Object.entries(m.metrics)
-                    .filter(([k, v]) => !IGNORED_METRIC_KEYS.has(k) && v != null)
-                    .map(([k, v]) => `${METRIC_LABELS[k] || k}=${v}`)
-                    .join(', ');
-                if (extra) line += ` | ${extra}`;
-            }
-            lines.push(line);
+    for (const m of latestByStation.values()) {
+        const date = new Date(m.measured_at).toISOString().slice(0, 16).replace('T', ' ');
+        let clean = '';
+        if (m.metrics && typeof m.metrics === 'object') {
+            clean = Object.entries(m.metrics)
+                .filter(([k, v]) => METRIC_LABELS[k] && v != null)
+                .map(([k, v]) => `${METRIC_LABELS[k]}=${v}`)
+                .join(', ');
         }
+        lines.push(`[${m.station_name}] ${date}: ${clean || `valor=${m.value}${m.unit ? ' ' + m.unit : ''}`}`);
     }
     return lines.join('\n');
 }
@@ -232,9 +310,15 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'El paciente aún no tiene mediciones para analizar.' });
         }
 
-        const spiroTable = buildSpirometryTable(patient, measurementsRes.rows);
+        // Bloques de análisis calculados en el servidor (deterministas): el
+        // modelo solo los reporta e interpreta, no recalcula.
+        const blocks = [
+            buildBodyAnalysis(patient, measurementsRes.rows),
+            buildSpirometryTable(patient, measurementsRes.rows),
+            buildStressAnalysis(patient, measurementsRes.rows)
+        ].filter(Boolean);
         const summary = buildPatientSummary(patient, measurementsRes.rows) +
-            (spiroTable ? '\n\n' + spiroTable : '');
+            (blocks.length ? '\n\n' + blocks.join('\n\n') : '');
 
         const aiResponse = await fetch(`${OPENAI_BASE_URL}/chat/completions`, {
             method: 'POST',
